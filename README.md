@@ -5,10 +5,10 @@
 
 ## Team info:
 
-### Contact person
+Contact person
 * Xiaonan Zhou(11644578) xiaonan.zhou@wsu.edu
 
-### Team member
+Team member
 * Kuan-Yu Tseng(11638205) kuan-yu.tseng@wsu.edu
 * Mengxiao Zhang(11651502) mengxiao.zhang@wsu.edu
 * Lei Chen(11623427) lei.chen2@wsu.edu
