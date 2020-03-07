@@ -23,8 +23,14 @@
             <ul class="navbar-nav mr-auto">
                 {{ render_nav_item('index', 'Home', use_li=True) }}
                 {{ render_nav_item('login', 'Log in', use_li=True) }}
+                {{ render_nav_item('table', 'Table State', use_li=True) }}
+                {{ render_nav_item('menu', 'Menu', use_li=True) }}
+                {{ render_nav_item('order', 'Order State', use_li=True) }}
             </ul>
         </div>
+        <ul class="navbar-nav mr-auto">
+           {{ render_nav_item('index', 'Log Out', use_li=True) }}
+        </ul>
     </nav>
     
     <main class="container">
