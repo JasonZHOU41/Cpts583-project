@@ -32,13 +32,23 @@
            {{ render_nav_item('index', 'Log Out', use_li=True) }}
         </ul>
     </nav>
-    
     <main class="container">
         {{ render_messages(container=False, dismissible=True) }}
+    <hr>
+        {% with message = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+
         {% block content %}{% endblock %}
     </main>
-
-    <footer class="text-center">
+          <footer class="text-center">
         {% block footer %}
             <small> &copy; 2018 <a href="http://greyli.com" title="Written by Grey Li">Grey Li</a>
             </small>

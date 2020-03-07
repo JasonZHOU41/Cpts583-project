@@ -26,7 +26,6 @@ class User(db.Model):
     def __repr__(self):
         return "User object: name=%s" % self.name
 
-
     @staticmethod
     def init_admin():
         db.create_all()
