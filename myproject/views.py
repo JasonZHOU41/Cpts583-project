@@ -18,42 +18,43 @@ def before_request():
     g.user = current_user
 
 
-@app.after_login
-def after_login(resp):
-    if resp.name is None or resp.name == "":
-        flash('Invalid login, please try again.')
-        return redirect(url_for('login'))
-    user = User.query.filter_by(name=resp.name).first()
-    if user is None:
-        flash('User not exist!')
-        return redirect(url_for('login'))
-    remember_me = False
-    if 'remember_me' in session:
-        remember_me = session['remember_me']
-        session.pop('remember_me', None)
-    login_user(user, remember=remember_me)
-    return redirect(request.args.get('next') or url_for('index'))
-
-
 @app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
     return render_template('index.html', title="It's the index")
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if g.user is not None and g.user.is_authenticated():
-        return redirect(url_for('index'))
+    '''
+        Create function for login, check user info
+        within database
+    '''
     form = LoginForm()
+    User.init_admin()
+
     if form.validate_on_submit():
-        flash('Login requested')
-        return redirect('/index')
+        uname = form.username.data
+        user = User.query.filter_by(name=uname).first()
+        if user is not None:
+            if user.password == form.password.data:
+                print('User info:', user)
+                flash('Login successful')
+                return redirect('/index')
+            else:
+                flash('Wrong password')
     return render_template('login.html', title="Sign In", form=form)
 
 
 @app.route('/Employee', methods=['GET', 'POST'])
 @login_required
 def employee():
+    '''
+        Manager's website
+        need check authority.
+        need show information about all employers
+        need show income of the restaurant
+    '''
     return render_template('employee.html', title="Employee")
 
 
@@ -82,6 +83,13 @@ def order():
 
 
 @app.route('/logout')
+@login_required
 def logout():
-    logout_user()
+    #logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/user/<username>', methods=['GET', 'POST'])
+@login_required
+def user(username):
+    return render_template('index.html')

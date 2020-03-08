@@ -13,6 +13,7 @@ app.config.from_object('config')
 
 bootstrap = Bootstrap(app)
 db = SQLAlchemy()
+db.init_app(app)
 
 lm = LoginManager()
 lm.init_app(app)
@@ -20,3 +21,4 @@ lm.login_view = 'login'
 
 
 from myproject import views, models
+
