@@ -46,6 +46,7 @@ body{
 }
 
 .btn{
+  margin-left: 118px;
   border-style: hidden;
   font-size: 1.1rem;
   border-radius: 5px;
