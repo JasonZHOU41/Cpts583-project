@@ -34,10 +34,15 @@ def login():
     User.init_admin()
 
     if form.validate_on_submit():
-        uname = form.username.data
-        user = User.query.filter_by(name=uname).first()
-        if user is not None:
-            if user.password == form.password.data:
+        # uname = form.username.data
+        input_name = request.form.get("username")
+        password = request.form.get("password")
+        user = User.query.filter_by(name=input_name).first()
+        if user is None:
+            flash("user does not exits")
+        else:
+            # if user.password == form.password.data:
+            if user.password == password:
                 print('User info:', user)
                 flash('Login successful')
                 return redirect('/index')

@@ -34,3 +34,11 @@ class User(db.Model):
         u1.email = "350535629@qq.com"
         db.session.add(u1)
         db.session.commit()
+
+
+# class Menu(db.Model):
+#     __tablename__ = "menu"
+#     id = db.Column(db.Integer, primary_key=True)
+#
+#     def __repr__(self):
+#         return "Menu object: name=%s" % self.name
