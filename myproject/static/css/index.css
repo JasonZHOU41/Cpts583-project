@@ -29,12 +29,14 @@ body{
 .form .form-control:focus {
   z-index: 2;
 }
-.form input[type="text"] {
-  margin-bottom: -1px;
-}
-.form input[type="password"] {
-  margin-bottom: 10px;
-}
+/*.form input[type="text"] {*/
+
+/*  margin-bottom: -1px;*/
+/*}*/
+/*.form input[type="password"] {*/
+
+/*  margin-bottom: 10px;*/
+/*}*/
 
 .form-control-label {
   /*color: white;*/
@@ -50,9 +52,20 @@ body{
   border-style: hidden;
   font-size: 1.1rem;
   border-radius: 5px;
+  background-color: #5486D1;
 }
 
 .form-control{
   border-style: hidden;
   border-radius: 5px;
+}
+
+.btn:hover{
+  background-color: #00CCCC;
+}
+
+.form input:focus{
+    border-style:solid;
+    border-color: #FF8000;
+	box-shadow: 0 0 15px #FF8000;
 }
