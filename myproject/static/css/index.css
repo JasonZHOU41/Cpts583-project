@@ -1,0 +1,57 @@
+body{
+  background-color: #f5d94d;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.nav-link{
+  /*background: #FF5900;*/
+  font-size: 1.1rem;
+  font-weight: bolder;
+  color: white;
+}
+
+.form {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form .checkbox {
+  font-weight: 400;
+}
+.form .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form .form-control:focus {
+  z-index: 2;
+}
+.form input[type="text"] {
+  margin-bottom: -1px;
+}
+.form input[type="password"] {
+  margin-bottom: 10px;
+}
+
+.form-control-label {
+  /*color: white;*/
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+  margin-left: 5px;
+  text-align: center;
+}
+
+.btn{
+  border-style: hidden;
+  font-size: 1.1rem;
+  border-radius: 5px;
+}
+
+.form-control{
+  border-style: hidden;
+  border-radius: 5px;
+}

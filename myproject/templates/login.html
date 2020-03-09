@@ -2,14 +2,22 @@
 {% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
 
 {% block content %}
-    <h1>render_form</h1>
-    {{ render_form(form) }}
-{#    <form name="login_form" action="/login" method="post">#}
-{#        <label> username </label>#}
-{#        <input type="text" name="username">#}
-{#        <label> password </label>#}
-{#        <input type="password" name="password">#}
-{#        <button  type="submit" value="Submit">Login</button>#}
-{#    </form>#}
+    <div style="vertical-align: middle; margin-top: 180px">
+        <div class="text-center">
+          <img src="../static/img/mainicon.svg" alt="" style="height: 15%; width: 15%">
+        </div>
+
+
+
+    {#    <h2>Log in</h2>#}
+    {#    {{ render_form(form) }}#}
+    {##}
+        <form class="form" action="/login" method="post">
+        {{ form.csrf_token() }}
+        {{ render_form_row ([form.username]) }}
+        {{ render_form_row ([form.password]) }}
+        {{ render_form_row ([form.submit]) }}
+        </form>
+    </div>
 
 {% endblock %}
