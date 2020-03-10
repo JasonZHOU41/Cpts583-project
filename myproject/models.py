@@ -20,6 +20,7 @@ class User(db.Model):
     name = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(128), unique=True)
     password = db.Column(db.String(128))
+    # role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
 
     def __repr__(self):
         return "User object: name=%s" % self.name
@@ -35,10 +36,41 @@ class User(db.Model):
         db.session.add(u1)
         db.session.commit()
 
-
+# class Table(db.Model):
+#     __tablename__ = "table"
+#     id = db.Column(db.Integer, primary_key=True)
+#     status = db.Column(db.Integer, db.ForeignKey("table_status.id"), nullable=False)
+#
+#     def __repr__(self):
+#         return "Table object: name=%s" % self.name
+#
+#
+# class Table_status(db.Model):
+#     __tablename__ = "table_status"
+#     id = db.Column(db.Integer, primary_key=True)
+#     status = db.Column(db.String(64), nullable=False)
+#
+#     def __repr__(self):
+#         return "Table_status object: name=%s" % self.name
+#
+#
+#
 # class Menu(db.Model):
 #     __tablename__ = "menu"
 #     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(64), unique=True)
+#     price = db.Column(db.String(64), nullable=False)
 #
 #     def __repr__(self):
 #         return "Menu object: name=%s" % self.name
+#
+#
+# class Order(db.Model):
+#     __tablename__ = "order"
+#     id = db.Column(db.Integer, primary_key=True)
+#     status = db.Column(db.Boolean, nullable=False)
+#     income = db.Column(db.String(64), nullable=False)
+#     # dishes_id = db.Column(db.Integer, db.ForeignKey("menu.id"))
+#
+#     def __repr__(self):
+#         return "Order object: name=%s" % self.name

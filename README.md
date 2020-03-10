@@ -17,3 +17,7 @@ github commit id: TsKYu
 github commit id: isMengxiao
 
 * Lei Chen(11623427) lei.chen2@wsu.edu
+
+## Project requirement:
+* python 3.6
+* pip install -r requirement.txt

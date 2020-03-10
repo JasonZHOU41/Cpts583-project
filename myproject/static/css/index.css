@@ -16,9 +16,11 @@ body{
   padding: 15px;
   margin: auto;
 }
+
 .form .checkbox {
   font-weight: 400;
 }
+
 .form .form-control {
   position: relative;
   box-sizing: border-box;
@@ -26,6 +28,7 @@ body{
   padding: 10px;
   font-size: 16px;
 }
+
 .form .form-control:focus {
   z-index: 2;
 }
