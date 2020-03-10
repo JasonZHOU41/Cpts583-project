@@ -35,8 +35,8 @@ def login():
 
     if form.validate_on_submit():
         # uname = form.username.data
-        input_name = request.form.get("username")
-        password = request.form.get("password")
+        input_name = form.username.data
+        password = form.password.data
         user = User.query.filter_by(name=input_name).first()
         if user is None:
             flash("user does not exits")
