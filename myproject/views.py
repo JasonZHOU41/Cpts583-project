@@ -31,19 +31,19 @@ def login():
         within database
     '''
     form = LoginForm()
-    User.init_admin()
+    # User.init_admin()
 
     if form.validate_on_submit():
         # uname = form.username.data
         input_name = form.username.data
         password = form.password.data
-        user = User.query.filter_by(name=input_name).first()
-        if user is None:
-            flash("user does not exits")
+        User_data = User.query.filter_by(name=input_name, password=password).first()
+        if User_data is None:
+            flash("user does not exits or wrong password")
         else:
             # if user.password == form.password.data:
-            if user.password == password:
-                print('User info:', user)
+            if User_data.password == password:
+                print('User info:', User_data, 'password:', User_data.password)
                 flash('Login successful')
                 return redirect('/index')
             else:
@@ -90,7 +90,7 @@ def order():
 @app.route('/logout')
 @login_required
 def logout():
-    #logout_user()
+    # logout_user()
     return redirect(url_for('index'))
 
 
