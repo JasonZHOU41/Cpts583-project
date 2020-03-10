@@ -7,8 +7,9 @@ from flask import current_app
 class Role(db.Model):
     __tablename__ = "roles"
     id = db.Column(db.Integer, primary_key=True)
+    # id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
     name = db.Column(db.String(32), unique=True)
-    #  users = db.relationship("User", backref="role")
+    # employee_name = db.Column(db.String(64), nullable=False)  # 员工名字
 
     def __repr__(self):
         return "Role object: name=%s" % self.name
@@ -17,6 +18,7 @@ class Role(db.Model):
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
+    # id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
     name = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(128), unique=True)
     password = db.Column(db.String(128))
@@ -38,7 +40,7 @@ class User(db.Model):
 
 # class Table(db.Model):
 #     __tablename__ = "table"
-#     id = db.Column(db.Integer, primary_key=True)
+#     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
 #     status = db.Column(db.Integer, db.ForeignKey("table_status.id"), nullable=False)
 #
 #     def __repr__(self):
@@ -47,7 +49,7 @@ class User(db.Model):
 #
 # class Table_status(db.Model):
 #     __tablename__ = "table_status"
-#     id = db.Column(db.Integer, primary_key=True)
+#     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
 #     status = db.Column(db.String(64), nullable=False)
 #
 #     def __repr__(self):
@@ -57,7 +59,7 @@ class User(db.Model):
 #
 # class Menu(db.Model):
 #     __tablename__ = "menu"
-#     id = db.Column(db.Integer, primary_key=True)
+#     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
 #     name = db.Column(db.String(64), unique=True)
 #     price = db.Column(db.String(64), nullable=False)
 #
@@ -67,7 +69,7 @@ class User(db.Model):
 #
 # class Order(db.Model):
 #     __tablename__ = "order"
-#     id = db.Column(db.Integer, primary_key=True)
+#     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
 #     status = db.Column(db.Boolean, nullable=False)
 #     income = db.Column(db.String(64), nullable=False)
 #     # dishes_id = db.Column(db.Integer, db.ForeignKey("menu.id"))

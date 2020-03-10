@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect
 from flask import g, url_for, request, session
 from flask_login import login_user, login_required, current_user
 from myproject import app, db, lm
-from .forms import LoginForm
+from .forms import LoginForm, Add_Form
 from .models import User
 
 
@@ -21,7 +21,8 @@ def before_request():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', title="It's the index")
+    form = Add_Form()  # Test the add form
+    return render_template('index.html', title="It's the index", form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -37,6 +38,9 @@ def login():
         # uname = form.username.data
         input_name = form.username.data
         password = form.password.data
+        # print("_____________________________________")
+        # print(input_name, password)
+        # print("_____________________________________")
         User_data = User.query.filter_by(name=input_name, password=password).first()
         if User_data is None:
             flash("user does not exits or wrong password")

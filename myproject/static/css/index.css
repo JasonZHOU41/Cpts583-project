@@ -72,3 +72,9 @@ body{
     border-color: #FF8000;
 	box-shadow: 0 0 15px #FF8000;
 }
+
+.form select:focus{
+    border-style:solid;
+    border-color: #FF8000;
+	box-shadow: 0 0 15px #FF8000;
+}

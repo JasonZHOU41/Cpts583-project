@@ -20,4 +20,4 @@ github commit id: isMengxiao
 
 ## Project requirement:
 * python 3.6
-* pip install -r requirement.txt
+* pip install -r requirements.txt

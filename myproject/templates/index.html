@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
 
 {% block content %}
     <h1>It's my project</h1>
-<ul>
-    <li><a href="{{ url_for('login') }}">Login you know? </a></li>
-</ul>
+{#<ul>#}
+{#    <li><a href="{{ url_for('login') }}">Login you know? </a></li>#}
+{#</ul>#}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2>Add the employee</h2>
+   {{ render_form(form) }}
 {% endblock %}
