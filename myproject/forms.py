@@ -50,7 +50,7 @@ class Add_Form(FlaskForm):
                                 ('4', 'Busboy'),
                                 ('5', 'Manager')])
 
-    submit = SubmitField('Add')
+    add = SubmitField('Add')
 
 
 # class Employer_Search(FlaskForm):

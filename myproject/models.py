@@ -9,7 +9,6 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
     name = db.Column(db.String(32), unique=True)
-    # employee_name = db.Column(db.String(64), nullable=False)  # 员工名字
 
     def __repr__(self):
         return "Role object: name=%s" % self.name
@@ -21,8 +20,9 @@ class User(db.Model):
     # id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
     name = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(128), unique=True)
+    # employee_name = db.Column(db.String(64), nullable=False)  # 员工名字
     password = db.Column(db.String(128))
-    # role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+    role_id = db.Column(db.Integer, unique=True)
 
     def __repr__(self):
         return "User object: name=%s" % self.name

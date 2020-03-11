@@ -5,7 +5,7 @@ from flask import g, url_for, request, session
 from flask_login import login_user, login_required, current_user
 from myproject import app, db, lm
 from .forms import LoginForm, Add_Form
-from .models import User
+from .models import User, Role
 
 
 @lm.user_loader
@@ -22,7 +22,11 @@ def before_request():
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     form = Add_Form()  # Test the add form
-    return render_template('index.html', title="It's the index", form=form)
+    role = request.args.get('role_name')
+    name = request.args.get('user_name')
+    print(role)
+    print(name)
+    return render_template('index.html', title="It's the index", form=form, role=role, name=name)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -45,11 +49,16 @@ def login():
         if User_data is None:
             flash("user does not exits or wrong password")
         else:
+            role = Role.query.filter_by(id=User_data.role_id).first()
+            print("---------------------------------------")
+            print(role.name)
+            print("---------------------------------------")
             # if user.password == form.password.data:
             if User_data.password == password:
                 print('User info:', User_data, 'password:', User_data.password)
                 flash('Login successful')
-                return redirect('/index')
+                # return redirect('/index')
+                return redirect(url_for('index', role_name=role.name, user_name=User_data.name))
             else:
                 flash('Wrong password')
     return render_template('login.html', title="Sign In", form=form)
