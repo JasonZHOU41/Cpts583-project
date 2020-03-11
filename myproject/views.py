@@ -36,28 +36,19 @@ def login():
         within database
     '''
     form = LoginForm()
-    # User.init_admin()
 
     if form.validate_on_submit():
-        # uname = form.username.data
         input_name = form.username.data
         password = form.password.data
-        # print("_____________________________________")
-        # print(input_name, password)
-        # print("_____________________________________")
-        User_data = User.query.filter_by(name=input_name, password=password).first()
+        User_data = User.query.filter_by(username=input_name, password=password).first()
         if User_data is None:
             flash("user does not exits or wrong password")
         else:
             role = Role.query.filter_by(id=User_data.role_id).first()
-            print("---------------------------------------")
-            print(role.name)
-            print("---------------------------------------")
-            # if user.password == form.password.data:
+
             if User_data.password == password:
                 print('User info:', User_data, 'password:', User_data.password)
                 flash('Login successful')
-                # return redirect('/index')
                 return redirect(url_for('index', role_name=role.name, user_name=User_data.name))
             else:
                 flash('Wrong password')
