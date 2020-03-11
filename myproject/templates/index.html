@@ -3,13 +3,65 @@
 
 {% block content %}
     <h1>It's my project</h1>
-{#<ul>#}
-{#    <li><a href="{{ url_for('login') }}">Login you know? </a></li>#}
-{#</ul>#}
+    {#<ul>#}
+    {#    <li><a href="{{ url_for('login') }}">Login you know? </a></li>#}
+    {#</ul>#}
     <br>
     <br>
+
+    <table class="table table-hover table-dark">
+        <tr>
+            <th scope="col">Employee ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>
+                <button class="table-btn btn-sm btn-info">edit</button>
+                <button class="table-btn btn-sm btn-danger">delete</button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            <td class="btn-col">
+                <button class="table-btn btn-sm btn-info">edit</button>
+                <button class="table-btn btn-sm btn-danger">delete</button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+            <td>
+                <button class="table-btn btn-sm btn-info">edit</button>
+                <button class="table-btn btn-sm btn-danger">delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <br>
     <br>
     <h2>Add the employee</h2>
-   {{ render_form(form) }}
+    {#    {{ render_form(form) }}#}
+
+    <form class="form add-form" action="/index" method="post">
+        {{ form.csrf_token() }}
+        {{ render_form_row ([form.username]) }}
+        {{ render_form_row ([form.password]) }}
+        {{ render_form_row ([form.password_again]) }}
+        {{ render_form_row ([form.email]) }}
+        {{ render_form_row ([form.name]) }}
+        {{ render_form_row ([form.role]) }}
+        {{ render_form_row ([form.submit]) }}
+    </form>
 {% endblock %}

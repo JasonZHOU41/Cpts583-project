@@ -73,8 +73,30 @@ body{
 	box-shadow: 0 0 15px #FF8000;
 }
 
-.login-form select:focus{
+.form select:focus{
     border-style:solid;
     border-color: #FF8000;
 	box-shadow: 0 0 15px #FF8000;
+}
+
+.btn-col{
+ width: 20%;
+}
+
+.table-btn{
+  transition-duration: 0.4s;
+}
+
+.table-btn:hover{
+  border: 1px solid #ffa1fe;
+  background-color: #ffa1fe;
+
+}
+
+.add-form .form-control-label{
+  font-size: 1rem;
+}
+
+.add-form .form-control input{
+  width: 20%;
 }
