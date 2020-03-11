@@ -1,22 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
 
 {% block content %}
-    <div style="vertical-align: middle; margin-top: 10%">
+    <div style="vertical-align: middle; margin-top: 25%">
         <div class="text-center">
-          <img src="../static/img/mainicon.svg" alt="" style="height: 15%; width: 15%">
+            <a href="{{url_for('.index')}}">
+                <img src="../static/img/mainicon.svg" alt="" style="height: 15%; width: 15%">
+            </a>
+
         </div>
-
-
-
-    {#    <h2>Log in</h2>#}
-    {#    {{ render_form(form) }}#}
-    {##}
         <form class="form login-form" action="/login" method="post">
-        {{ form.csrf_token() }}
-        {{ render_form_row ([form.username]) }}
-        {{ render_form_row ([form.password]) }}
-        {{ render_form_row ([form.submit]) }}
+            {{ form.csrf_token() }}
+            {{ render_form_row ([form.username]) }}
+            {{ render_form_row ([form.password]) }}
+            {{ render_form_row ([form.submit]) }}
         </form>
     </div>
 

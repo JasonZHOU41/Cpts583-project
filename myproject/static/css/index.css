@@ -100,3 +100,7 @@ body{
 .add-form .form-control input{
   width: 20%;
 }
+
+.alert {
+  margin-bottom: -50px;
+}
