@@ -22,7 +22,7 @@ class User(db.Model):
     email = db.Column(db.String(128), unique=True)
     name = db.Column(db.String(64), nullable=False)  # 员工名字
     password = db.Column(db.String(128))
-    role_id = db.Column(db.Integer, unique=True)
+    role_id = db.Column(db.Integer)
 
     def __repr__(self):
         return "User object: name=%s" % self.name
@@ -32,9 +32,11 @@ class User(db.Model):
     #     db.drop_all()
     #     db.create_all()
     #     u1 = User()
-    #     u1.name = "Admin"
-    #     u1.password = "Admin_Password"
-    #     u1.email = "350535629@qq.com"
+    #     u1.username = "Admin11"
+    #     u1.password = "111222"
+    #     u1.name = 'BOb'
+    #     u1.email = "350342629@qq.com"
+    #     u1.role_id = '1'
     #     db.session.add(u1)
     #     db.session.commit()
 

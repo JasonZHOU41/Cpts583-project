@@ -46,7 +46,7 @@ class Add_Form(FlaskForm):
     role = SelectField('Role',
                        choices=[('1', 'Waiter'),
                                 ('2', 'Host'),
-                                ('3', 'kitchen'),
+                                ('3', 'Kitchen'),
                                 ('4', 'Busboy'),
                                 ('5', 'Manager')])
 

@@ -21,3 +21,7 @@ github commit id: isMengxiao
 ## Project requirement:
 * python 3.6
 * pip install -r requirements.txt
+
+## Admin password:
+* username: admin
+* password: 112233

@@ -36,6 +36,7 @@ def login():
         within database
     '''
     form = LoginForm()
+    # User.init_admin()
 
     if form.validate_on_submit():
         input_name = form.username.data
@@ -49,7 +50,7 @@ def login():
             if User_data.password == password:
                 print('User info:', User_data, 'password:', User_data.password)
                 flash('Login successful')
-                return redirect(url_for('index', role_name=role.name, user_name=User_data.name))
+                return redirect(url_for('index', role_name=role.name, user_name=User_data.username))
             else:
                 flash('Wrong password')
     return render_template('login.html', title="Sign In", form=form)
