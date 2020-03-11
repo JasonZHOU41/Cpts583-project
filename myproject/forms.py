@@ -25,29 +25,29 @@ class Add_Form(FlaskForm):
     '''
     username = StringField('Username',
                            validators=[DataRequired(), Length(1, 20)],
-                           render_kw={"placeholder": "Input User Name/ Work Number"})
+                           render_kw={"placeholder": "User Name/ Work Number"})
 
     password = PasswordField('Password',
                              validators=[DataRequired(), Length(6, 20)],
-                             render_kw={"placeholder": "Input the Password"})
+                             render_kw={"placeholder": "Password"})
 
-    password_again = PasswordField('Password_again',
+    password_again = PasswordField('Confirm Password',
                                    validators=[DataRequired(), Length(6, 20)],
-                                   render_kw={"placeholder": "Input the Password"})
+                                   render_kw={"placeholder": "Confirm Password"})
 
     email = StringField('Email',
                         validators=[DataRequired(), Email()],
-                        render_kw={"placeholder": "Input Email Address"})
+                        render_kw={"placeholder": "Email Address"})
 
-    name = StringField('Name',
+    name = StringField('Full Name',
                        validators=[DataRequired()],
-                       render_kw={"placeholder": "Input Name"})
+                       render_kw={"placeholder": "Name"})
 
     role = SelectField('Role',
                        choices=[('1', 'Waiter'),
                                 ('2', 'Host'),
                                 ('3', 'kitchen'),
-                                ('4', 'Bus'),
+                                ('4', 'Busboy'),
                                 ('5', 'Manager')])
 
     submit = SubmitField('Add')
