@@ -10,18 +10,18 @@ body{
   color: white;
 }
 
-.form {
+.login-form {
   width: 100%;
   max-width: 330px;
   padding: 15px;
   margin: auto;
 }
 
-.form .checkbox {
+.login-form .checkbox {
   font-weight: 400;
 }
 
-.form .form-control {
+.login-form .form-control {
   position: relative;
   box-sizing: border-box;
   height: auto;
@@ -29,7 +29,7 @@ body{
   font-size: 16px;
 }
 
-.form .form-control:focus {
+.login-form .form-control:focus {
   z-index: 2;
 }
 /*.form input[type="text"] {*/
@@ -41,7 +41,7 @@ body{
 /*  margin-bottom: 10px;*/
 /*}*/
 
-.form-control-label {
+.login-form .form-control-label {
   /*color: white;*/
   font-weight: bold;
   font-size: 1.1rem;
@@ -50,7 +50,7 @@ body{
   text-align: center;
 }
 
-.btn{
+.login-form .btn{
   margin-left: 37%;
   border-style: hidden;
   font-size: 1.1rem;
@@ -58,12 +58,12 @@ body{
   background-color: #5486D1;
 }
 
-.form-control{
+.login-form .form-control{
   border-style: hidden;
   border-radius: 5px;
 }
 
-.btn:hover{
+.login-form .btn:hover{
   background-color: #00CCCC;
 }
 
@@ -73,7 +73,7 @@ body{
 	box-shadow: 0 0 15px #FF8000;
 }
 
-.form select:focus{
+.login-form select:focus{
     border-style:solid;
     border-color: #FF8000;
 	box-shadow: 0 0 15px #FF8000;
