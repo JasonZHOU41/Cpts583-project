@@ -2,59 +2,16 @@
 {% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
 
 {% block content %}
-    <h1>It's my project</h1>
+    <h1 style="font-weight: bolder">Welcome to the restaurant !!!!!</h1>
     {% if name and role %}
         <p>Welcome back </p>
-        <p style="color: red">{{name}}</p>
+        <p style="color: red">{{ name }}</p>
         <p>you position is</p>
-        <p style="color: red">{{role}}</p>
+        <p style="color: red">{{ role }}</p>
     {% endif %}
 
-    <table class="table table-hover table-dark">
-        <thead>
-        <tr>
-            <th scope="col">Employee ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Position</th>
-            <th scope="col">Email</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">11622222</th>
-            <td>Xiaonan Zhou</td>
-            <td>Waiter</td>
-            <td>zhou411@gmail.com</td>
-            <td>
-                <button class="table-btn btn-sm btn-info">edit</button>
-                <button class="table-btn btn-sm btn-danger">delete</button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td class="btn-col">
-                <button class="table-btn btn-sm btn-info">edit</button>
-                <button class="table-btn btn-sm btn-danger">delete</button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry the Bird</td>
-            <td>Thornton</td>
-            <td>@twitter</td>
-            <td>
-                <button class="table-btn btn-sm btn-info">edit</button>
-                <button class="table-btn btn-sm btn-danger">delete</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <h2>Create new employee information</h2>
+
+    <h2 style="margin-top: 30px">Create new employee information</h2>
     {#    {{ render_form(form) }}#}
 
     <form class="form add-form" action="/index" method="post">
@@ -67,4 +24,82 @@
         {{ render_form_row ([form.role]) }}
         {{ render_form_row ([form.add]) }}
     </form>
+
+    {#    employer info#}
+
+    {% if employer %}
+        <h2 style="margin-top: 30px">Employer INFO</h2>
+        <table class="table table-hover table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Staff No.</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Name</th>
+                <th scope="col">Password</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for s in employer %}
+                <tr>
+                    <th scope="row">{{ s.id }}</th>
+                    <td>{{ s.username }}</td>
+                    <td>{{ s.email }}</td>
+                     <td>{{ s.name }}</td>
+                     <td>{{ s.password }}</td>
+                    {% if s.role_id == 1 %}
+                        <td>Waiter</td>
+                        {% elif s.role_id == 2 %}
+                        <td>Host</td>
+                        {% elif s.role_id == 3 %}
+                        <td>Kitchen</td>
+                        {% elif s.role_id == 4 %}
+                        <td>Busboy</td>
+                        {% elif s.role_id == 5 %}
+                        <td>Manager</td>
+                    {% endif %}
+
+                     <td>{{ s.status }}</td>
+                    <td>
+                        <button class="table-btn btn-sm btn-info">Edit</button>
+                        <button class="table-btn btn-sm btn-danger">Delete</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+
+    {#    table info#}
+
+    {% if table %}
+        <h2 style="margin-top: 30px">Table INFO</h2>
+        <table class="table table-hover table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Table No.</th>
+                <th scope="col">Order</th>
+                <th scope="col">Status</th>
+                <th scope="col">Operation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for t in table %}
+                <tr>
+                    <th scope="row">{{ t.id }}</th>
+                    <td>{{ t.order_id }}</td>
+                    <td>{{ t.status }}</td>
+                    <td>
+                        <button class="table-btn btn-sm btn-info">Order</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+
 {% endblock %}

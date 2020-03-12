@@ -7,7 +7,7 @@ from flask_login import login_user, login_required, current_user
 from flask_login import logout_user
 from myproject import app, db, lm
 from .forms import LoginForm, Add_Form
-from .models import User, Role
+from .models import *
 
 
 @lm.user_loader
@@ -36,8 +36,15 @@ def index():
         return render_template('index.html',
                                title="It's the indexcurrent user activity",
                                form=form, role=role, name=name)
+
+    '''
+    Table and employer state show 
+    '''
+    table = Table.query.all()
+    employer = User.query.all()
+
     return render_template('index.html', title="It's the index", form=form,
-                           role=role, name=name)
+                           role=role, name=name, table=table, employer = employer)
 
 
 @app.route('/login', methods=['GET', 'POST'])
