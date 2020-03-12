@@ -3,7 +3,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, PasswordField, IntegerField
 from wtforms import TextField, FormField, SelectField, FieldList, SubmitField
-from wtforms.validators import DataRequired, Length, Email
+from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 
 class LoginForm(FlaskForm):
@@ -28,7 +28,7 @@ class Add_Form(FlaskForm):
                            render_kw={"placeholder": "User Name/ Work Number"})
 
     password = PasswordField('Password',
-                             validators=[DataRequired(), Length(6, 20)],
+                             validators=[DataRequired(), Length(6, 20), EqualTo("password_again")],
                              render_kw={"placeholder": "Password"})
 
     password_again = PasswordField('Confirm Password',
