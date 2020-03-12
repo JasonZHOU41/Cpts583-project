@@ -1,4 +1,4 @@
-{% extend 'base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 <h1> Nothing new, it's emloyer's web</h1>
@@ -9,7 +9,7 @@
             <p> Welcome employer {{ current_user.name }}</p>
             <p> Here is the information page</p>
             <p> Your email address is {{ current_user.email }}</p>
-        {% endif}
+        {% endif %}
     {% endif %}
 
 {% endblock %}
