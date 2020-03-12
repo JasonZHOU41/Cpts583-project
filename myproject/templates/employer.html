@@ -2,5 +2,14 @@
 
 {% block content %}
 <h1> Nothing new, it's emloyer's web</h1>
+    {% if current_user.is_authenticated %}
+        {% if current_user.role_id==5 %}
+            <p> Hello manager {{ current_user.name }} </p>
+        {% else %}
+            <p> Welcome employer {{ current_user.name }}</p>
+            <p> Here is the information page</p>
+            <p> Your email address is {{ current_user.email }}</p>
+        {% endif}
+    {% endif %}
 
 {% endblock %}

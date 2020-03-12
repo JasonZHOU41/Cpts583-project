@@ -32,8 +32,8 @@ class Add_Form(FlaskForm):
                              render_kw={"placeholder": "Password"})
 
     password_again = PasswordField('Confirm Password',
-                                   validators=[DataRequired(), Length(6, 20)],
-                                   render_kw={"placeholder": "Confirm Password"})
+                            validators=[DataRequired(), Length(6, 20)],
+                            render_kw={"placeholder": "Confirm Password"})
 
     email = StringField('Email',
                         validators=[DataRequired(), Email()],

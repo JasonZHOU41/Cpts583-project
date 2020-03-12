@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> This is the employee's web.</h1>
+    {% if current_user.is_authenticated %}
+        {% if current_user.role_id==5 %}
+            <p> Welcome manager {{ current_user.name }} </p>
+            <p> Here is the information page</p>
+            <p> Your email address is: {{ current_user.email }}</p>
+        {% else %}
+            <p> Sorry employer {{ current_user.name }} </p>
+            <p> It's managers' page</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

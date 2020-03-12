@@ -3,10 +3,7 @@
 
 {% block content %}
     <h1>It's my project</h1>
-    {#<ul>#}
-    {#    <li><a href="{{ url_for('login') }}">Login you know? </a></li>#}
-    {#</ul>#}
-    {% if name and  role %}
+    {% if name and role %}
         <p>Welcome back </p>
         <p style="color: red">{{name}}</p>
         <p>you position is</p>

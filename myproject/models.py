@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+
 from myproject import db
 from flask import current_app
+from flask_login import UserMixin
 
 
 class Role(db.Model):
@@ -14,7 +16,7 @@ class Role(db.Model):
         return "Role object: name=%s" % self.name
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "users"
     # id = db.Column(db.Integer, primary_key=True)
     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
@@ -39,6 +41,7 @@ class User(db.Model):
     #     u1.role_id = '1'
     #     db.session.add(u1)
     #     db.session.commit()
+
 
 class Table(db.Model):
     __tablename__ = "table"
