@@ -88,12 +88,13 @@ def manager(name):
 
 @app.route('/employer/<name>', methods=['GET', 'POST'])
 @login_required
-def employer(nickname):
+def employer(name):
     '''
         This page is for employers' personal information like salary,
         total work time, name, email or other things.
     '''
     print("Current user!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+    print(name)
     print(current_user.name)
     return render_template('employer.html', title="Employer")
 
