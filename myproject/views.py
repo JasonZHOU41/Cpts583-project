@@ -17,8 +17,9 @@ def load_user(id):
 
 @app.before_request
 def before_request():
-    if not session.get('user'):
-        return redirect(url_for('login'))
+    # if not session.get('user'):
+    #    return redirect(url_for('login'))
+    pass
 
 
 @app.route('/', methods=['GET', 'POST'])
