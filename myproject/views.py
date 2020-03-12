@@ -25,7 +25,6 @@ def before_request():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    form = Add_Form()  # Test the add form
     role = request.args.get('role_name')
     name = request.args.get('user_name')
     print(role)
@@ -34,17 +33,10 @@ def index():
         role = Role.query.filter_by(id=current_user.role_id).first().name
         name = current_user.name
         return render_template('index.html',
-                               title="It's the indexcurrent user activity",
-                               form=form, role=role, name=name)
-
-    '''
-    Table and employer state show 
-    '''
-    table = Table.query.all()
-    employer = User.query.all()
-
-    return render_template('index.html', title="It's the index", form=form,
-                           role=role, name=name, table=table, employer = employer)
+                               title="It's the index current user activity",
+                               role=role, name=name)
+    return render_template('index.html', title="It's the index",
+                           role=role, name=name)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -54,6 +46,7 @@ def login():
         within database
     '''
     form = LoginForm()
+    # User.init_admin()
 
     if form.validate_on_submit():
         input_name = form.username.data
@@ -68,7 +61,7 @@ def login():
                 print('User info:', User_data, 'password:', User_data.password)
                 login_user(User_data)
                 flash('Login successful')
-                role_name = role.name.lower() if role.name == "Manager" else\
+                role_name = role.name.lower() if role.name == "Manager" else \
                     "employer"
                 return redirect(url_for(role_name, name=User_data.name))
                 #  return redirect(url_for('index', role_name=role.name,
@@ -90,7 +83,13 @@ def manager(name):
     print("Current Manager!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
     print(name)
     print(current_user.name)
-    return render_template('manager.html', title="Manager")
+
+    form = Add_Form()
+    table_list = Table.query.all()
+    employer_list = User.query.all()
+    menu_list = Menu.query.all()
+    return render_template('manager.html', title="Manager", form=form,
+                           table=table_list, employer=employer_list, menu=menu_list)
 
 
 @app.route('/employer/<name>', methods=['GET', 'POST'])
@@ -103,7 +102,10 @@ def employer(name):
     print("Current user!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
     print(name)
     print(current_user.name)
-    return render_template('employer.html', title="Employer")
+
+    table_list = Table.query.all()
+    return render_template('employer.html', title="Employer",
+                           table=table_list)
 
 
 '''
@@ -136,7 +138,11 @@ def menu():
 @app.route('/OrderState', methods=['GET', 'POST'])
 @login_required
 def order():
-    return render_template('order.html', title="Order")
+    table_id = request.args.get('table_id')
+    print("----------------------------------")
+    print(table_id)
+    menu = Menu.query.all()
+    return render_template('order.html', title="Order", menu=menu)
 
 
 @app.route('/logout')

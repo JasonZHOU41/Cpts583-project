@@ -1,5 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>It is orders!</h1>
+    <h1>It is orders!</h1>
+    <h2 style="margin-top: 30px">This part show the selected dish</h2>
+    <p>lalallalalalalallala</p>
+    <h2 style="margin-top: 30px">This part show the  menu</h2>
+    {% if menu %}
+        <h2 style="margin-top: 30px">Menu INFO</h2>
+        <table class="table table-hover table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Menu No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for m in menu %}
+                <tr>
+                    <th scope="row">{{ m.id }}</th>
+                    <td>{{ m.name }}</td>
+                    <td>${{ m.price }}</td>
+                    <td> <button class="table-btn btn-sm btn-info">Add</button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}

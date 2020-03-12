@@ -4,6 +4,7 @@
 from myproject import db
 from flask import current_app
 from flask_login import UserMixin
+import datetime
 
 
 class Role(db.Model):
@@ -49,6 +50,7 @@ class Table(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
     status = db.Column(db.Integer, db.ForeignKey("table_status.id"), nullable=False)
     order_id = db.Column(db.Integer, db.ForeignKey("order.id"), nullable=True)
+    staff_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)  # new!!!
     status = db.Column(db.String(64), nullable=False)
 
     def __repr__(self):
@@ -69,8 +71,7 @@ class Order(db.Model):
     __tablename__ = "order"
     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
     status = db.Column(db.String(64), nullable=False)
-    # income = db.Column(db.String(64), nullable=False)
-    # dishes_id = db.Column(db.Integer, db.ForeignKey("menu.id"))
+    time = db.Column(db.DateTime, default=datetime.datetime.now, nullable=False)
 
     def __repr__(self):
         return "Order object: name=%s" % self.name
@@ -79,9 +80,9 @@ class Order(db.Model):
 class Detail(db.Model):
     __tablename__ = "detail"
     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
-    dish_id = db.Column(db.Integer, db.ForeignKey("menu.id"), nullable=True)
-    order_id = db.Column(db.Integer, db.ForeignKey("order.id"), nullable=True)
-    # dishes_id = db.Column(db.Integer, db.ForeignKey("menu.id"))
+    dish_id = db.Column(db.Integer, db.ForeignKey("menu.id"), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey("order.id"), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return "Detail object: name=%s" % self.name
