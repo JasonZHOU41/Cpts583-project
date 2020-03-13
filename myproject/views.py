@@ -8,6 +8,7 @@ from flask_login import logout_user
 from myproject import app, db, lm
 from .forms import *
 from .models import *
+from .utils import *
 
 
 @lm.user_loader
@@ -46,8 +47,6 @@ def login():
         within database
     '''
     form = LoginForm()
-    # User.init_admin()
-
     if form.validate_on_submit():
         input_name = form.username.data
         password = form.password.data
@@ -61,9 +60,9 @@ def login():
                 print('User info:', User_data, 'password:', User_data.password)
                 login_user(User_data)
                 flash('Login successful')
-                role_name = role.name.lower() if role.name == "Manager" else \
-                    "employer"
-                return redirect(url_for(role_name, name=User_data.name))
+                #role_name = role.name.lower() if role.name == "Manager" else \
+                #    "employer"
+                return redirect(url_for(role.name.lower(), name=User_data.name))
                 #  return redirect(url_for('index', role_name=role.name,
                 #                        user_name=User_data.username))
             else:
@@ -89,7 +88,8 @@ def manager(name):
     employer_list = User.query.all()
     menu_list = Menu.query.all()
     return render_template('manager.html', title="Manager", form=form,
-                           table=table_list, employer=employer_list, menu=menu_list)
+                           table=table_list, employer=employer_list,
+                           menu=menu_list)
 
 
 @app.route('/employer/<name>', methods=['GET', 'POST'])
@@ -109,12 +109,25 @@ def employer(name):
 
 
 '''
-@app.route('/Waiter/<name>')
+@app.route('/waiter/<name>')
 @login_required
+'''
 
-@app.route('/Host/<name>', methods=['GET', 'POST'])
+
+@app.route('/host/<name>', methods=['GET', 'POST'])
 @login_required
+def host(name):
+    table_list = Table.query.all()
+    table_id = request.args.get("table_id")
+    task_id = request.args.get("task_id")
+    DoTask(task_id, table_id)
+    print('-----------------host---------------')
+    print(table_id, task_id)
+    return render_template('host.html', title="Host", table=table_list,
+                           host_name=name)
 
+
+'''
 @app.route('/Kitchen/<name>', methods=['GET', 'POST'])
 @login_required
 
@@ -139,14 +152,15 @@ def menu():
     edit_user = User.query.filter_by(id=user).first()
     if form.validate_on_submit():
         print("Fuxk uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
-    return render_template('menu.html', title="Menu", form=form, edit_user=edit_user)
+    return render_template('menu.html', title="Menu", form=form,
+                           edit_user=edit_user)
 
 
 @app.route('/OrderState', methods=['GET', 'POST'])
 @login_required
 def order():
     table_id = request.args.get('table_id')
-    print("----------------------------------")
+    print("----------------order------------------")
     print(table_id)
     menu = Menu.query.all()
     return render_template('order.html', title="Order", menu=menu)

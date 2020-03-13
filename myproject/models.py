@@ -24,7 +24,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(128), unique=True)
     name = db.Column(db.String(64), nullable=False)  # 员工名字
     password = db.Column(db.String(128))
-    role_id = db.Column(db.Integer)
+    role_id = db.Column(db.Integer)  #
     status = db.Column(db.String(64), nullable=False)
 
     def __repr__(self):
@@ -54,7 +54,7 @@ class Table(db.Model):
     status = db.Column(db.String(64), nullable=False)
 
     def __repr__(self):
-        return "Table object: name=%s" % self.name
+        return "Table object: id=%s" % self.id
 
 
 class Menu(db.Model):
