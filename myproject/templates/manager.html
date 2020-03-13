@@ -23,7 +23,7 @@
     <h2 style="margin-top: 30px">Create new employee information</h2>
     {#    {{ render_form(form) }}#}
 
-    <form class="form add-form" action="/index" method="post">
+    <form class="form add-form"  action="/Manager/{{ current_user.name }}"  method="post">
         {{ form.csrf_token() }}
         {{ render_form_row ([form.username]) }}
         {{ render_form_row ([form.password]) }}
@@ -31,7 +31,7 @@
         {{ render_form_row ([form.email]) }}
         {{ render_form_row ([form.name]) }}
         {{ render_form_row ([form.role]) }}
-        {{ render_form_row ([form.add]) }}
+        {{ render_form_row ([form.add_user]) }}
     </form>
 
 
@@ -135,6 +135,7 @@
     {#    {{ render_form(form) }}#}
 
     <form class="form add-form" action="/Manager/{{ current_user.name }}" method="post">
+        {#    <form class="form add-form" action="{{ url_for('manager', name = current_user.name ) }}" method="post">#}
         {{ form.csrf_token() }}
         {{ render_form_row ([menu_add_form.name]) }}
         {{ render_form_row ([menu_add_form.price]) }}
@@ -158,32 +159,13 @@
                     <th scope="row">{{ m.id }}</th>
                     <td>{{ m.name }}</td>
                     <td>${{ m.price }}</td>
-                    <td><button type="button" class="table-btn btn-sm btn-danger edit-btn">delete</button></td>
+                    <td>
+                        <button type="button" class="table-btn btn-sm btn-danger edit-btn">delete</button>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     {% endif %}
 
-    <!-- Modal -->
-    {#    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"#}
-    {#         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">#}
-    {#        <div class="modal-dialog modal-dialog-centered" role="document">#}
-    {#            <div class="modal-content">#}
-    {#                <div class="modal-header">#}
-    {#                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>#}
-    {#                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
-    {#                        <span aria-hidden="true">&times;</span>#}
-    {#                    </button>#}
-    {#                </div>#}
-    {#                <div class="modal-body">#}
-    {#                    ...#}
-    {#                </div>#}
-    {#                <div class="modal-footer">#}
-    {#                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
-    {#                    <button type="button" class="btn btn-primary">Save changes</button>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
 {% endblock %}

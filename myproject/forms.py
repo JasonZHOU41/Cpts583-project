@@ -52,7 +52,7 @@ class Add_Form(FlaskForm):
                                 ('4', 'Busboy'),
                                 ('5', 'Manager')])
 
-    add = SubmitField('Add')
+    add_user = SubmitField('Add')
 
 
 class Edit_Form(FlaskForm):
@@ -91,3 +91,8 @@ class Add_menu(FlaskForm):
                         render_kw={"placeholder": "Input the Price"})
 
     add = SubmitField('Add')
+
+
+class Delete_form(FlaskForm):
+    id = StringField('id', validators=[DataRequired()])
+    delete = SubmitField('Delete')
