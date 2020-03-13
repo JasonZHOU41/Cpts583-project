@@ -7,8 +7,8 @@ from flask_login import login_user, login_required, current_user
 from flask_login import logout_user
 from myproject import app, db, lm
 from .forms import *
-from .models import *
-from .utils import *
+from .models import Role, User, Table, Menu, Order, Detail
+from .utils import DoTask
 
 
 @lm.user_loader
@@ -70,7 +70,7 @@ def login():
     return render_template('login.html', title="Sign In", form=form)
 
 
-@app.route('/Manager/<name>', methods=['GET', 'POST'])
+@app.route('/manager/<name>', methods=['GET', 'POST'])
 @login_required
 def manager(name):
     '''
@@ -127,10 +127,17 @@ def employer(name):
                            table=table_list)
 
 
-'''
 @app.route('/waiter/<name>')
 @login_required
-'''
+def waiter(name):
+    waiter_id = User.query.filter_by(name=name).first().id
+    table_list = Table.query.filter_by(staff_id=waiter_id).all()
+    table_id = request.args.get("table_id")
+    task_id = request.args.get("task_id")
+    flash(DoTask(task_id, table_id))
+    return render_template('waiter.html', title="Waiter",
+                           talbe=table_list, waiter_name=name)
+
 
 
 @app.route('/host/<name>', methods=['GET', 'POST'])
@@ -139,7 +146,14 @@ def host(name):
     table_list = Table.query.all()
     table_id = request.args.get("table_id")
     task_id = request.args.get("task_id")
-    flash(DoTask(task_id, table_id))
+    if table_id:
+        table = Table.query.filter_by(id=table.id).first()
+        if table.status == "Available":  # if table available, call waiter
+            flash(DoTask(1, table_id))
+        elif table.status == "Need Clean":  # if table needs clean, call busboy
+            flash(DoTask(3, table_id))
+        else:
+            pass
     print('-----------------host---------------')
     print(table_id, task_id)
     return render_template('host.html', title="Host", table=table_list,
@@ -147,10 +161,10 @@ def host(name):
 
 
 '''
-@app.route('/Kitchen/<name>', methods=['GET', 'POST'])
+@app.route('/kitchen/<name>', methods=['GET', 'POST'])
 @login_required
 
-@app.route('/Busboy/<name>', methods=['GET', 'POST'])
+@app.route('/busboy/<name>', methods=['GET', 'POST'])
 @login_required
 '''
 

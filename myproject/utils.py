@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from .models import *
+from .models import User, Table
+from random import randint
+
 
 
 def DoTask(task_id, table_id=None, order_id=None, employer_id=None):
@@ -16,8 +18,14 @@ def DoTask(task_id, table_id=None, order_id=None, employer_id=None):
 
 def AssignWaiter(table_id):
     print("-------------------AssignWaiter--------------")
-    waiters = User.query.filter_by(role_id='1').all()
     table = Table.query.filter_by(id=table_id).first()
+    waiters = User.query.filter_by(role_id='1').all()
+    free_waiters = []
+    for waiter in waiters:
+        if waiter.status != "busy":
+            free_waiters.append(waiter)
+    index = randint(0, len(free_waiters))
+
     return "Helloworld!"
     # for waiter in waiters:
         #  if waiter.status == '': # 如果有waiter空闲状态, 则分配

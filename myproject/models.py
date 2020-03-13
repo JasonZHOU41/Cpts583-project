@@ -9,8 +9,8 @@ import datetime
 
 class Role(db.Model):
     __tablename__ = "roles"
-    # id = db.Column(db.Integer, primary_key=True)
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True,
+                   nullable=False)  # 主键自增，唯一，不可为空
     name = db.Column(db.String(32), unique=True)
 
     def __repr__(self):
@@ -25,40 +25,28 @@ class Role(db.Model):
     5- Manager
     '''
 
+
 class User(UserMixin, db.Model):
     __tablename__ = "users"
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
-    username = db.Column(db.String(64), unique=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True,
+                   nullable=False)  # 主键自增，唯一，不可为空
+    username = db.Column(db.String(64), unique=True)  # The name for login
     email = db.Column(db.String(128), unique=True)
     name = db.Column(db.String(64), nullable=False)  # 员工名字
     password = db.Column(db.String(128))
-    role_id = db.Column(db.Integer)  #
-    status = db.Column(db.String(64), nullable=False)
+    role_id = db.Column(db.Integer)
+    status = db.Column(db.String(64), nullable=False)  # busy/free
 
     def __repr__(self):
         return "User object: name=%s" % self.name
 
-    # @staticmethod
-    # def init_admin():
-    #     db.drop_all()
-    #     db.create_all()
-    #     u1 = User()
-    #     u1.username = "admin"
-    #     u1.password = "111222"
-    #     u1.name = 'BOb'
-    #     u1.email = "350342629@qq.com"
-    #     u1.role_id = '1'
-    #     u1.status = 'free'
-    #     db.session.add(u1)
-    #     db.session.commit()
-
 
 class Table(db.Model):
     __tablename__ = "table"
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
-    # status = db.Column(db.Integer, db.ForeignKey("table_status.id"), nullable=False)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True,
+                   nullable=False)  # 主键自增，唯一，不可为空
     order_id = db.Column(db.Integer, db.ForeignKey("order.id"), nullable=True)
-    staff_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)  # new!!!
+    staff_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     status = db.Column(db.String(64), nullable=False)
 
     def __repr__(self):
@@ -70,6 +58,7 @@ class Table(db.Model):
     2. Occupy
     3. Need Clean
     '''
+
 
 class Menu(db.Model):
     __tablename__ = "menu"
@@ -95,15 +84,15 @@ class Order(db.Model):
     1. Prepare: Initial status of the order(When waiter click the order button)
         - Click "Order" button, check the order is exits or not,
             if yes, show the order detail.
-            
+
             else, set a new Order record on the "order" table.
                   Fill the order_id on the "table" table
                   When add a dish from menu, opera the "detail" table
-         
+
     2. Ready: When kitchen finish the order(ignore the single dish)
         - Change the order status
-    
-    3. Finish: When waiter click the "Finish order" button 
+
+    3. Finish: When waiter click the "Finish order" button
         - Clean the order_id on the "table" table
     '''
 
