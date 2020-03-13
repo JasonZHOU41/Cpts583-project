@@ -5,9 +5,9 @@
 {% block content %}
 <h1>It's menu !</h1>
     {% if edit_user %}
-        <form class="form edit-form" action="/edit" method="post" name="edit_form">
-            {{ form.csrf_token() }}
+        <form class="form edit-form" action="{{ url_for('menu') }}" method="POST" name="form">
             <div class="form-row">
+                {{ form.csrf_token() }}
                 <label>Id</label>
                 <input  type="text" class="form-control" name="id" value="{{ edit_user.id }}" readonly="readonly">
                 <label>Username</label>
@@ -21,6 +21,7 @@
                 <label>Role</label>
                 <input type="text" class="form-control" name="Role" value="{{ edit_user.role_id }}">
                 {{ render_form_row ([form.edit]) }}
+                <input type="submit" value="确认">
             </div>
         </form>
     {% endif %}

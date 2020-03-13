@@ -60,11 +60,9 @@ def login():
                 print('User info:', User_data, 'password:', User_data.password)
                 login_user(User_data)
                 flash('Login successful')
-                #role_name = role.name.lower() if role.name == "Manager" else \
+                # role_name = role.name.lower() if role.name == "Manager" else \
                 #    "employer"
                 return redirect(url_for(role.name.lower(), name=User_data.name))
-                #  return redirect(url_for('index', role_name=role.name,
-                #                        user_name=User_data.username))
             else:
                 flash('Wrong password')
     return render_template('login.html', title="Sign In", form=form)
@@ -79,36 +77,25 @@ def manager(name):
         need show information about all employers
         need show income of the restaurant
     '''
-    print("Current Manager!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
-    print(name)
-    print(current_user.name)
-
     form = Add_Form()
     menu_add_form = Add_menu()
+    edit_form = Edit_Form()
     table_list = Table.query.all()
     employer_list = User.query.all()
     menu_list = Menu.query.all()
 
-    if menu_add_form.validate_on_submit():
-        dish_name = menu_add_form.name.data
-        menu_add_form.name.data = ''
-        dish_price = menu_add_form.price.data
-        menu_add_form.price.data = ''
-        dish = Menu.query.filter_by(name=dish_name).first()
-        if dish:
-            flash('Already exits')
-        else:
-            new_dish = Menu()
-            new_dish.name = dish_name
-            new_dish.price = dish_price
-            db.session.add(new_dish)
-            db.session.commit()
-            flash("Success !")
-            redirect(url_for('manager', name=name))
-            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    # Add User
+    if AddUser(form):
+        return redirect(url_for('manager', name=name))
+
+    # Add menu item
+    if AddMenu(menu_add_form):
+        return redirect(url_for('manager', name=name))
+
     return render_template('manager.html', title="Manager", form=form,
                            table=table_list, employer=employer_list,
-                           menu=menu_list, menu_add_form=menu_add_form)
+                           menu=menu_list, menu_add_form=menu_add_form,
+                           edit_user=edit_form)
 
 
 @app.route('/employer/<name>', methods=['GET', 'POST'])
@@ -179,12 +166,31 @@ def table():
 @login_required
 def menu():
     form = Edit_Form()
-    user = request.args.get('user_id')
+    user_id = request.args.get('user_id')
     where = request.args.get('from')
-    print("user is:", user)
-    edit_user = User.query.filter_by(id=user).first()
-    if form.validate_on_submit():
-        print("Fuxk uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
+    # print("user is:", user)
+    edit_user = User.query.filter_by(id=user_id).first()
+    if form.edit.data and form.validate_on_submit():
+        user_username = form.username.data
+        user_pass = form.password.data
+        user_email = form.email.data
+        user_name = form.name.data
+        user_role = form.role.data
+
+        form.username.data = ''
+        form.password.data = ''
+        form.email.data = ''
+        form.name.data = ''
+        form.role.data = ''
+
+        edit_user.username = user_username
+        edit_user.password = user_pass
+        edit_user.email = user_email
+        edit_user.name = user_name
+        edit_user.role_id = user_role
+        db.session.commit()
+        return redirect(url_for('manager', name=where))
+
     return render_template('menu.html', title="Menu", form=form,
                            edit_user=edit_user)
 

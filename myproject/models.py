@@ -40,6 +40,14 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return "User object: name=%s" % self.name
 
+    '''
+    staff status:
+    1. free
+    2. busy
+
+    Add new user status: free
+    '''
+
 
 class Table(db.Model):
     __tablename__ = "table"
