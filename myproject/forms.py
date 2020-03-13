@@ -81,3 +81,13 @@ class Edit_Form(FlaskForm):
 
     edit = SubmitField('Edit')
 
+
+class Add_menu(FlaskForm):
+    name = StringField('Dish',
+                       validators=[DataRequired()],
+                       render_kw={"placeholder": "Input the dish name"})
+
+    price = StringField('Role', validators=[DataRequired()],
+                        render_kw={"placeholder": "Input the Price"})
+
+    add = SubmitField('Add')

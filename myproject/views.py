@@ -84,12 +84,31 @@ def manager(name):
     print(current_user.name)
 
     form = Add_Form()
+    menu_add_form = Add_menu()
     table_list = Table.query.all()
     employer_list = User.query.all()
     menu_list = Menu.query.all()
+
+    if menu_add_form.validate_on_submit():
+        dish_name = menu_add_form.name.data
+        menu_add_form.name.data = ''
+        dish_price = menu_add_form.price.data
+        menu_add_form.price.data = ''
+        dish = Menu.query.filter_by(name=dish_name).first()
+        if dish:
+            flash('Already exits')
+        else:
+            new_dish = Menu()
+            new_dish.name = dish_name
+            new_dish.price = dish_price
+            db.session.add(new_dish)
+            db.session.commit()
+            flash("Success !")
+            redirect(url_for('manager', name=name))
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     return render_template('manager.html', title="Manager", form=form,
                            table=table_list, employer=employer_list,
-                           menu=menu_list)
+                           menu=menu_list, menu_add_form=menu_add_form)
 
 
 @app.route('/employer/<name>', methods=['GET', 'POST'])
