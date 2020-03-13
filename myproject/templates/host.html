@@ -11,15 +11,18 @@
                 <th scope="col">Table No.</th>
                 <th scope="col">Order</th>
                 <th scope="col">Status</th>
+                <th scope="col">Order_status</th>
                 <th scope="col">Operation</th>
             </tr>
             </thead>
             <tbody>
             {% for t in table %}
                 <tr>
-                    <th scope="row">{{ t.id }}</th>
+                    <td scope="row">{{ t.id }}</td>
                     <td>{{ t.order_id }}</td>
                     <td>{{ t.status }}</td>
+                    <td>No Order</td>
+                    {# 如果有order 做table 和 order 的连表查询 #}
                     <td>
                         <a href="{{ url_for('order') }}?table_id={{ t.id }}&order_id={{ t.order_id }}">
                             <button class="table-btn btn-sm btn-info">Order</button>

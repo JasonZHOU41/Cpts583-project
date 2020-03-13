@@ -16,6 +16,14 @@ class Role(db.Model):
     def __repr__(self):
         return "Role object: name=%s" % self.name
 
+    '''
+    id- name
+    1- Waiter
+    2- Host
+    3- Kitchen
+    4- Busboy
+    5- Manager
+    '''
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
@@ -26,15 +34,6 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(128))
     role_id = db.Column(db.Integer)  #
     status = db.Column(db.String(64), nullable=False)
-
-    '''
-    id- name
-    1- Waiter
-    2- Host
-    3- Kitchen
-    4- Busboy
-    5- Manager
-    '''
 
     def __repr__(self):
         return "User object: name=%s" % self.name
@@ -65,6 +64,12 @@ class Table(db.Model):
     def __repr__(self):
         return "Table object: id=%s" % self.id
 
+    '''
+    Table - 3 status:
+    1. Available
+    2. Occupy
+    3. Need Clean
+    '''
 
 class Menu(db.Model):
     __tablename__ = "menu"
@@ -84,6 +89,23 @@ class Order(db.Model):
 
     def __repr__(self):
         return "Order object: name=%s" % self.name
+
+    '''
+    Order - 3 status
+    1. Prepare: Initial status of the order(When waiter click the order button)
+        - Click "Order" button, check the order is exits or not,
+            if yes, show the order detail.
+            
+            else, set a new Order record on the "order" table.
+                  Fill the order_id on the "table" table
+                  When add a dish from menu, opera the "detail" table
+         
+    2. Ready: When kitchen finish the order(ignore the single dish)
+        - Change the order status
+    
+    3. Finish: When waiter click the "Finish order" button 
+        - Clean the order_id on the "table" table
+    '''
 
 
 class Detail(db.Model):
