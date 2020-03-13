@@ -120,7 +120,7 @@ def host(name):
     table_list = Table.query.all()
     table_id = request.args.get("table_id")
     task_id = request.args.get("task_id")
-    DoTask(task_id, table_id)
+    flash(DoTask(task_id, table_id))
     print('-----------------host---------------')
     print(table_id, task_id)
     return render_template('host.html', title="Host", table=table_list,
