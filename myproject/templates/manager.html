@@ -27,7 +27,7 @@
         {{ form.csrf_token() }}
         {{ render_form_row ([form.username]) }}
         {{ render_form_row ([form.password]) }}
-        {{ render_form_row ([form.password_again]) }}
+        {{ render_form_row ([form.password1]) }}
         {{ render_form_row ([form.email]) }}
         {{ render_form_row ([form.name]) }}
         {{ render_form_row ([form.role]) }}
@@ -52,29 +52,32 @@
             <tbody>
             {% for s in employer %}
                 <tr>
-                    <th scope="row">{{ s.id }}</th>
-                    <td>{{ s.username }}</td>
-                    <td>{{ s.email }}</td>
-                    <td>{{ s.name }}</td>
-                    <td>{{ s.password }}</td>
-                    {% if s.role_id == 1 %}
-                        <td>Waiter</td>
-                    {% elif s.role_id == 2 %}
-                        <td>Host</td>
-                    {% elif s.role_id == 3 %}
-                        <td>Kitchen</td>
-                    {% elif s.role_id == 4 %}
-                        <td>Busboy</td>
-                    {% elif s.role_id == 5 %}
-                        <td>Manager</td>
-                    {% endif %}
+                    <th id="user_id" scope="row">{{ s.id }}</th>
+                    <td id="user_username">{{ s.username }}</td>
+                    <td id="user_email">{{ s.email }}</td>
+                    <td id="user_name">{{ s.name }}</td>
+                    <td id=“user_password”>{{ s.password }}</td>
+                    <td id="user_role">
+                        {% if s.role_id == 1 %}
+                            Waiter
+                        {% elif s.role_id == 2 %}
+                            Host
+                        {% elif s.role_id == 3 %}
+                            Kitchen
+                        {% elif s.role_id == 4 %}
+                            Busboy
+                        {% elif s.role_id == 5 %}
+                            Manager
+                        {% endif %}
+                    </td>
 
                     <td>{{ s.status }}</td>
                     <td>
-                        <button id="edit" type="button" class="table-btn btn-sm btn-primary" data-toggle="modal"
-                                data-target="#exampleModalCenter">
+                        <a href="{{ url_for('menu') }}?user_id={{ s.id }}&from={{ current_user.name }}">
+                            <button id="edit" type="button" class="table-btn btn-sm btn-primary edit-btn">
                             Edit
-                        </button>
+                            </button>
+                        </a>
                         <button class="table-btn btn-sm btn-danger">Delete</button>
                     </td>
                 </tr>
@@ -104,7 +107,7 @@
                     <td>{{ t.order_id }}</td>
                     <td>{{ t.status }}</td>
                     <td>
-                        <a href="{{ url_for('order') }}?table_id={{ t.id }},order_id={{ t.order_id }}">
+                        <a href="{{ url_for('order') }}?table_id={{ t.id }}&order_id={{ t.order_id }}">
                             <button class="table-btn btn-sm btn-info">Order</button>
                         </a>
                         <button class="table-btn btn-sm btn-danger">Finish Order</button>
@@ -149,24 +152,24 @@
     {% endif %}
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+{#    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"#}
+{#         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">#}
+{#        <div class="modal-dialog modal-dialog-centered" role="document">#}
+{#            <div class="modal-content">#}
+{#                <div class="modal-header">#}
+{#                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>#}
+{#                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                        <span aria-hidden="true">&times;</span>#}
+{#                    </button>#}
+{#                </div>#}
+{#                <div class="modal-body">#}
+{#                    ...#}
+{#                </div>#}
+{#                <div class="modal-footer">#}
+{#                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
+{#                    <button type="button" class="btn btn-primary">Save changes</button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}

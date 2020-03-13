@@ -1,5 +1,27 @@
 {% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
+
 
 {% block content %}
 <h1>It's menu !</h1>
+    {% if edit_user %}
+        <form class="form edit-form" action="/edit" method="post" name="edit_form">
+            {{ form.csrf_token() }}
+            <div class="form-row">
+                <label>Id</label>
+                <input type="text" class="form-control" name="id" value="{{ edit_user.id }}">
+                <label>Username</label>
+                <input type="text" class="form-control" name="username" value="{{ edit_user.username }}">
+                <label>Password</label>
+                <input type="text" class="form-control" name="password" value="{{ edit_user.password }}">
+                <label>Email</label>
+                <input type="text" class="form-control" name="email" value="{{ edit_user.email }}">
+                <label>Name</label>
+                <input type="text" class="form-control" name="Name" value="{{ edit_user.name }}">
+                <label>Role</label>
+                <input type="text" class="form-control" name="Role" value="{{ edit_user.role_id }}">
+                {{ render_form_row ([form.edit]) }}
+            </div>
+        </form>
+    {% endif %}
 {% endblock %}

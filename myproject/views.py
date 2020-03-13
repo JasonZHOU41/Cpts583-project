@@ -6,7 +6,7 @@ from flask import g, url_for, request, session
 from flask_login import login_user, login_required, current_user
 from flask_login import logout_user
 from myproject import app, db, lm
-from .forms import LoginForm, Add_Form
+from .forms import *
 from .models import *
 
 
@@ -129,10 +129,17 @@ def table():
     return render_template('table.html', title="Table")
 
 
-@app.route('/Menu', methods=['GET', 'POST'])
+@app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def menu():
-    return render_template('menu.html', title="Menu")
+    form = Edit_Form()
+    user = request.args.get('user_id')
+    where = request.args.get('from')
+    print("user is:", user)
+    edit_user = User.query.filter_by(id=user).first()
+    if form.validate_on_submit():
+        print("Fuxk uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
+    return render_template('menu.html', title="Menu", form=form, edit_user=edit_user)
 
 
 @app.route('/OrderState', methods=['GET', 'POST'])
