@@ -77,12 +77,7 @@ class Edit_Form(FlaskForm):
                        validators=[DataRequired()],
                        render_kw={"placeholder": "Name"})
 
-    role = SelectField('Role',
-                       choices=[('1', 'Waiter'),
-                                ('2', 'Host'),
-                                ('3', 'Kitchen'),
-                                ('4', 'Busboy'),
-                                ('5', 'Manager')])
+    role = StringField('Role', validators=[DataRequired()])
 
     edit = SubmitField('Edit')
 

@@ -27,6 +27,15 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer)  #
     status = db.Column(db.String(64), nullable=False)
 
+    '''
+    id- name
+    1- Waiter
+    2- Host
+    3- Kitchen
+    4- Busboy
+    5- Manager
+    '''
+
     def __repr__(self):
         return "User object: name=%s" % self.name
 
@@ -48,7 +57,7 @@ class User(UserMixin, db.Model):
 class Table(db.Model):
     __tablename__ = "table"
     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
-    status = db.Column(db.Integer, db.ForeignKey("table_status.id"), nullable=False)
+    # status = db.Column(db.Integer, db.ForeignKey("table_status.id"), nullable=False)
     order_id = db.Column(db.Integer, db.ForeignKey("order.id"), nullable=True)
     staff_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)  # new!!!
     status = db.Column(db.String(64), nullable=False)

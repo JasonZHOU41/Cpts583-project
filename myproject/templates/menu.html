@@ -9,9 +9,9 @@
             {{ form.csrf_token() }}
             <div class="form-row">
                 <label>Id</label>
-                <input type="text" class="form-control" name="id" value="{{ edit_user.id }}">
+                <input  type="text" class="form-control" name="id" value="{{ edit_user.id }}" readonly="readonly">
                 <label>Username</label>
-                <input type="text" class="form-control" name="username" value="{{ edit_user.username }}">
+                <input id="username" type="text" class="form-control" name="username" value="{{ edit_user.username }}">
                 <label>Password</label>
                 <input type="text" class="form-control" name="password" value="{{ edit_user.password }}">
                 <label>Email</label>
