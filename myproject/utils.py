@@ -42,6 +42,7 @@ def FinishOrder(table_id, employer_id):
     table.status = "Need Clean"
     employer = User.query.filter_by(id=employer_id).first()
     employer.status = "free"
+    CleanTable(table_id)
 
 
 def CleanTable(table_id):
