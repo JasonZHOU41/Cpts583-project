@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-from .models import User, Table, Menu
+from .models import User, Table, Menu, Order
 from random import randint
 from flask import flash, redirect, request
 from flask import url_for
 from myproject import db
+import datetime
+import json
 
 
 def DoTask(task_id, table_id=None, order_id=None, employer_id=None):
@@ -13,10 +15,12 @@ def DoTask(task_id, table_id=None, order_id=None, employer_id=None):
         return AssignWaiter(table_id)
     if task_id == 1:
         print("Start order")
-    if task_id == 2:
-        print("Finish order")
+    if task_id == 2:  #  Complete order
+        print("Kitchen has complete the order")
+        return CompleteOrder(table_id, order_id)
+    if task_id == 3:  #  Server complete, 用完餐了，结完账走人了
         return FinishOrder(table_id, employer_id)
-    if task_id == 3:
+    if task_id == 4:
         return CleanTable(table_id)
 
 
@@ -28,20 +32,37 @@ def AssignWaiter(table_id):
     for waiter in waiters:
         if waiter.status != "busy":
             free_waiters.append(waiter)
-    index = randint(0, len(free_waiters))
-    waiter = free_waiters[index]
-    table.staff_id = waiter.id
-    table.status = "Occupy"
-    waiter.status = "busy"
-    return "waiter "+waiter.name+" is serving table "+str(table.id)
+    if free_waiters:
+        index = randint(0, len(free_waiters))
+        waiter = free_waiters[index]
+        table.staff_id = waiter.id
+        table.status = "Occupy"
+        waiter.status = "busy"
+        db.session.commit()
+        return "waiter "+waiter.name+" is serving table "+str(table.id)
+    else:
+        return "There is no waiter free"
+
+
+def CompleteOrder(table_id, order_id):
+    print("-------------------Complete Order------------")
+    table = Table.query.filter_by(id=table_id).first()
+    order = Order.nchengquery.filter_by(id=order_id).first()
+    order.status = "Ready"
+    db.session.commit()
 
 
 def FinishOrder(table_id, employer_id):
     print("-------------------FinishOrder---------------")
     table = Table.query.filter_by(id=table_id).first()
     table.status = "Need Clean"
+    order = Order.query.filter_by(id=table.order_id).first()
+    order.status = "Finish"
+    order.table_id = 0
     employer = User.query.filter_by(id=employer_id).first()
     employer.status = "free"
+    flash("Table "+str(table_id)+" has complete checkout")
+    db.session.commit()
     CleanTable(table_id)
 
 
@@ -57,6 +78,7 @@ def CleanTable(table_id):
     busboy = free_busboys[index]
     table.staff_id = busboy.id
     busboy.status = "busy"
+    db.session.commit()
     return "busboy "+busboy.name+" is cleaning table "+str(table.id)
 
 
@@ -109,6 +131,19 @@ def AddMenu(form):
             db.session.commit()
             flash('success')
             return True
+
+
+def AddOrder(table_id):
+    order = Order()
+    order.status = "Prepare"
+    order.time = datetime.datetime.now
+    order.dishes = json.dumps([])
+    table_id = table_id
+    table = Table.query.filter_by(id=table_id).first()
+    table.order_id = order.id
+    db.session.add(order)
+    db.session.commit()
+    return order
 
 
 def EditUser(form, target):

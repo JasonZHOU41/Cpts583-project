@@ -23,10 +23,10 @@
                     <td>{{ t.status }}</td>
                     <td>No Order</td>
                     <td>
-                        <a href="{{ url_for('order') }}?table_id={{ t.id }}&order_id={{ t.order_id }}">
+                        <a href="{{ url_for('waiter', name=waiter_name) }}?table_id={{ t.id }}&order_id={{ t.order_id }}&task_id=5">
                             <button class="table-btn btn-sm btn-info">Order</button>
                         </a>
-                        <a href="{{ url_for('waiter', name=waiter_name) }}?table_id={{ t.id }}&task_id=2">
+                        <a href="{{ url_for('waiter', name=waiter_name) }}?table_id={{ t.id }}&task_id=3">
                             <button class="table-btn btn-sm btn-danger">Finish Order</button>
                         </a>
                     </td>

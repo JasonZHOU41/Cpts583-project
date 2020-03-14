@@ -62,9 +62,9 @@ class Table(db.Model):
 
     '''
     Table - 3 status:
-    1. available
-    2. occupy
-    3. need Clean
+    1. Available
+    2. Occupy
+    3. Need Clean
     '''
 
 
@@ -83,6 +83,8 @@ class Order(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)  # 主键自增，唯一，不可为空
     status = db.Column(db.String(64), nullable=False)
     time = db.Column(db.DateTime, default=datetime.datetime.now, nullable=False)
+    table_id = db.Column(db.Integer, nullable=False)
+    dishes = db.Column(db.String(128))
 
     def __repr__(self):
         return "Order object: name=%s" % self.name

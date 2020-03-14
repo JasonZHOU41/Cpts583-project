@@ -4,6 +4,33 @@
     <h1>It is orders!</h1>
     <h2 style="margin-top: 30px">This part show the selected dish</h2>
     <p>lalallalalalalallala</p>
+    {% if dishes %}
+        <h2 style="margin-top: 30px">Selected Dishes</h2>
+        <table class="table table-hover table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Dish No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dish in dishes %}
+                <tr>
+                    <th scope="row">{{ dish.id }}</th>
+                    <td>{{ dish.name }}</td>
+                    <td>${{ dish.price }}</td>
+                    <td>
+                      <a href="{{ url_for('order') }}?order_id={{ order_id }}&dish_id={{ m.id }}&delete=1">
+                        <button class="table-btn btn-sm btn-info">Delete</button>
+                      </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
     <h2 style="margin-top: 30px">This part show the  menu</h2>
     {% if menu %}
         <h2 style="margin-top: 30px">Menu INFO</h2>
@@ -22,7 +49,11 @@
                     <th scope="row">{{ m.id }}</th>
                     <td>{{ m.name }}</td>
                     <td>${{ m.price }}</td>
-                    <td> <button class="table-btn btn-sm btn-info">Add</button></td>
+                    <td>
+                      <a href="{{ url_for('order') }}?order_id={{ order_id }}&dish_id={{ m.id }}">
+                        <button class="table-btn btn-sm btn-info">Add</button>
+                      </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

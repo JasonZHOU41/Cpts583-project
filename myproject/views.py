@@ -9,6 +9,7 @@ from myproject import app, db, lm
 from .forms import *
 from .models import Role, User, Table, Menu, Order, Detail
 from .utils import *
+import json
 
 
 @lm.user_loader
@@ -120,12 +121,20 @@ def waiter(name):
     waiter_id = User.query.filter_by(name=name).first().id
     table_list = Table.query.filter_by(staff_id=waiter_id).all()
     table_id = request.args.get("table_id")
-    task_id = int(request.args.get("task_id"))
-    print("Table_id:%d, task_id:%d" % (table_id, task_id))
+    task_id = request.args.get("task_id")
     if task_id and table_id:
-        flash(DoTask(task_id, table_id, order_id=None, employer_id=waiter_id))
+        task_id = int(task_id)
+        if task_id == 3:
+            flash(DoTask(task_id, table_id, order_id=None,
+                         employer_id=waiter_id))
+        if task_id == 5:
+            order = Order.query.filter_by(table_id=table_id).first()
+            if order is None:
+                order = AddOrder(table_id)
+            return redirect(url_for("order", order_id=order.id,
+                                        table_id=table_id))
     return render_template('waiter.html', title="Waiter",
-                           talbe=table_list, waiter_name=name)
+                           table=table_list, waiter_name=name)
 
 
 @app.route('/host/<name>', methods=['GET', 'POST'])
@@ -141,7 +150,7 @@ def host(name):
         if table.status == "Available":  # if table available, call waiter
             flash(DoTask(0, table_id))
         elif table.status == "Need Clean":  # if table needs clean, call busboy
-            flash(DoTask(3, table_id))
+            flash(DoTask(4, table_id))
         else:
             pass
     print('-----------------host---------------')
@@ -150,10 +159,18 @@ def host(name):
                            host_name=name)
 
 
-'''
 @app.route('/kitchen/<name>', methods=['GET', 'POST'])
 @login_required
-'''
+def kitchen(name):
+    order_list = Order.query.all()
+    order_id = request.args.get("order_id")
+    table_id = request.args.get("table_id")
+    if order_id and table_id:
+        print('---------------try-----finish order!----------')
+        flash(DoTask)
+    print('----------------kitchen-------------')
+    return render_template('kitchen.html', title="Kitchen", orders=order_list,
+                           kitchen_name=name)
 
 
 @app.route('/busboy/<name>', methods=['GET', 'POST'])
@@ -168,7 +185,8 @@ def busboy(name):
         table = Table.query.filter_by(id=table_id).first()
         table.status = "Available"
         flash("Table "+str(table_id)+" has been cleaned")
-    return render_template('busboy.html', title="Busboy", table=table_list)
+    return render_template('busboy.html', title="Busboy", table=table_list,
+                           busboy_name=name)
 
 
 @app.route('/TableState', methods=['GET', 'POST'])
@@ -196,10 +214,30 @@ def menu():
 @login_required
 def order():
     table_id = request.args.get('table_id')
+    order_id = request.args.get('order_id')
+    order = Order.query.filter_by(id=order_id).first()
+    dishes = json.loads(order.dishes)
+    dish_list = []
+    for dish_id in dishes:
+        dish_list.append(Menu.query.filter_by(id=dish_id).first())
     print("----------------order------------------")
     print(table_id)
+    print(order_id)
     menu = Menu.query.all()
-    return render_template('order.html', title="Order", menu=menu)
+
+    print("----------------AddOrder---------------")
+    dish_id = request.args.get('dish_id')
+    if dish_id:
+        if delete:
+            dishes.remove(dish_id)
+            order.dishes = json.dumps(dishes)
+            db.session.commit()
+        else:
+            dishes.append(dish_id)
+            order.dishes = json.dumps(dishes)
+            db.session.commit()
+    return render_template('order.html', title="Order", menu=menu,
+                           order_id=order_id, dishes=dish_list)
 
 
 @app.route('/logout')
