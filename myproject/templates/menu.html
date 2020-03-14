@@ -5,24 +5,29 @@
 {% block content %}
 <h1>It's menu !</h1>
     {% if edit_user %}
-        <form class="form edit-form" action="{{ url_for('menu') }}" method="POST" name="form">
-            <div class="form-row">
-                {{ form.csrf_token() }}
-                <label>Id</label>
-                <input  type="text" class="form-control" name="id" value="{{ edit_user.id }}" readonly="readonly">
-                <label>Username</label>
-                <input id="username" type="text" class="form-control" name="username" value="{{ edit_user.username }}">
-                <label>Password</label>
-                <input type="text" class="form-control" name="password" value="{{ edit_user.password }}">
-                <label>Email</label>
-                <input type="text" class="form-control" name="email" value="{{ edit_user.email }}">
-                <label>Name</label>
-                <input type="text" class="form-control" name="Name" value="{{ edit_user.name }}">
-                <label>Role</label>
-                <input type="text" class="form-control" name="Role" value="{{ edit_user.role_id }}">
-                {{ render_form_row ([form.edit]) }}
-                <input type="submit" value="确认">
-            </div>
+
+        <form class="form add-form"
+              action="{{ url_for('menu') }}?user_id={{ user_id }}&from={{ where }}"
+              method="post">
+            {{ form.csrf_token() }}
+            {{ render_form_row ([form.id]) }}
+            {{ render_form_row ([form.username]) }}
+            {{ render_form_row ([form.password]) }}
+            {{ render_form_row ([form.email]) }}
+            {{ render_form_row ([form.name]) }}
+            {{ render_form_row ([form.role]) }}
+            {{ render_form_row ([form.edit]) }}
         </form>
     {% endif %}
+
+{#    <form class="form add-form" action="{{ url_for('menu') }}?user_id={{ user_id }}&from={{ where }}" method="post">#}
+{#        {{ form.csrf_token() }}#}
+{#        {{ render_form_row ([form.id]) }}#}
+{#        {{ render_form_row ([form.username]) }}#}
+{#        {{ render_form_row ([form.password]) }}#}
+{#        {{ render_form_row ([form.email]) }}#}
+{#        {{ render_form_row ([form.name]) }}#}
+{#        {{ render_form_row ([form.role]) }}#}
+{#        {{ render_form_row ([form.edit]) }}#}
+{#    </form>#}
 {% endblock %}

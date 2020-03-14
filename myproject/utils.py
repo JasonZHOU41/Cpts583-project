@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from .models import User, Table, Menu
 from random import randint
-from flask import flash, redirect
+from flask import flash, redirect, request
 from flask import url_for
 from myproject import db
 
@@ -109,3 +109,36 @@ def AddMenu(form):
             db.session.commit()
             flash('success')
             return True
+
+
+def EditUser(form, target):
+    form.id.data = str(target.id)
+    form.username.data = target.username
+    form.password.data = target.password
+    form.email.data = target.email
+    form.name.data = target.name
+    form.role.data = str(target.role_id)
+
+    if form.edit.data and form.validate_on_submit():
+        target.username = request.form.get('username')
+        target.password = request.form.get('password')
+        target.email = request.form.get('email')
+        target.name = request.form.get('name')
+        target.role_id = request.form.get('role')
+        # db.session.add(edit_user)
+        db.session.commit()
+        flash("Update successful!")
+        return True
+
+
+def DeleteMenu(form):
+    if form.validate_on_submit():
+        menu_id = request.form.get('id')
+        print("---------------------------------------")
+        print(menu_id)
+        menu_list = Menu.query.filter_by(id=menu_id).first()
+        db.session.delete(menu_list)
+        db.session.commit()
+        flash("delete success")
+        return True
+

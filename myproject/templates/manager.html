@@ -23,7 +23,7 @@
     <h2 style="margin-top: 30px">Create new employee information</h2>
     {#    {{ render_form(form) }}#}
 
-    <form class="form add-form"  action="/Manager/{{ current_user.name }}"  method="post">
+    <form class="form add-form"  action="/manager/{{ current_user.name }}"  method="post">
         {{ form.csrf_token() }}
         {{ render_form_row ([form.username]) }}
         {{ render_form_row ([form.password]) }}
@@ -134,7 +134,7 @@
     <h2 style="margin-top: 30px">Create new Menu</h2>
     {#    {{ render_form(form) }}#}
 
-    <form class="form add-form" action="/Manager/{{ current_user.name }}" method="post">
+    <form class="form add-form" action="/manager/{{ current_user.name }}" method="post">
         {#    <form class="form add-form" action="{{ url_for('manager', name = current_user.name ) }}" method="post">#}
         {{ form.csrf_token() }}
         {{ render_form_row ([menu_add_form.name]) }}
@@ -150,7 +150,6 @@
                 <th scope="col">Menu No.</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
-                <th scope="col">Operation</th>
             </tr>
             </thead>
             <tbody>
@@ -159,9 +158,7 @@
                     <th scope="row">{{ m.id }}</th>
                     <td>{{ m.name }}</td>
                     <td>${{ m.price }}</td>
-                    <td>
-                        <button type="button" class="table-btn btn-sm btn-danger edit-btn">delete</button>
-                    </td>
+
                 </tr>
             {% endfor %}
             </tbody>

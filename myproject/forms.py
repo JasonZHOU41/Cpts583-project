@@ -61,13 +61,15 @@ class Edit_Form(FlaskForm):
     Edit the new account for the employee
 
     '''
+    id = IntegerField("Id", validators=[DataRequired(), Length(1, 20)], render_kw={'readonly': True})
+
     username = StringField('Username',
                            validators=[DataRequired(), Length(1, 20)],
                            render_kw={"placeholder": "User Name/ Work Number"})
 
-    password = PasswordField('Password',
-                             validators=[DataRequired(), Length(6, 20)],
-                             render_kw={"placeholder": "Password"})
+    password = StringField('Password',
+                           validators=[DataRequired(), Length(6, 20)],
+                           render_kw={"placeholder": "Password"})
 
     email = html5.EmailField('Email',
                              validators=[DataRequired(), Email()],
@@ -77,7 +79,14 @@ class Edit_Form(FlaskForm):
                        validators=[DataRequired()],
                        render_kw={"placeholder": "Name"})
 
-    role = StringField('Role', validators=[DataRequired()])
+    # role = StringField('Role', validators=[DataRequired(), Length(1, 20)])
+
+    role = SelectField('Role',
+                       choices=[('1', 'Waiter'),
+                                ('2', 'Host'),
+                                ('3', 'Kitchen'),
+                                ('4', 'Busboy'),
+                                ('5', 'Manager')])
 
     edit = SubmitField('Edit')
 

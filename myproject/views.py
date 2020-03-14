@@ -8,7 +8,7 @@ from flask_login import logout_user
 from myproject import app, db, lm
 from .forms import *
 from .models import Role, User, Table, Menu, Order, Detail
-from .utils import DoTask
+from .utils import *
 
 
 @lm.user_loader
@@ -183,31 +183,13 @@ def menu():
     form = Edit_Form()
     user_id = request.args.get('user_id')
     where = request.args.get('from')
-    # print("user is:", user)
     edit_user = User.query.filter_by(id=user_id).first()
-    if form.edit.data and form.validate_on_submit():
-        user_username = form.username.data
-        user_pass = form.password.data
-        user_email = form.email.data
-        user_name = form.name.data
-        user_role = form.role.data
 
-        form.username.data = ''
-        form.password.data = ''
-        form.email.data = ''
-        form.name.data = ''
-        form.role.data = ''
-
-        edit_user.username = user_username
-        edit_user.password = user_pass
-        edit_user.email = user_email
-        edit_user.name = user_name
-        edit_user.role_id = user_role
-        db.session.commit()
+    if EditUser(form, edit_user):
         return redirect(url_for('manager', name=where))
 
     return render_template('menu.html', title="Menu", form=form,
-                           edit_user=edit_user)
+                           user_id=user_id, where=where, edit_user=edit_user)
 
 
 @app.route('/OrderState', methods=['GET', 'POST'])

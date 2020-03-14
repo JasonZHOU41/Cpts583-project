@@ -62,9 +62,9 @@ class Table(db.Model):
 
     '''
     Table - 3 status:
-    1. Available
-    2. Occupy
-    3. Need Clean
+    1. available
+    2. occupy
+    3. need Clean
     '''
 
 
