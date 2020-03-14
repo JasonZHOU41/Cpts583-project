@@ -120,11 +120,12 @@ def waiter(name):
     waiter_id = User.query.filter_by(name=name).first().id
     table_list = Table.query.filter_by(staff_id=waiter_id).all()
     table_id = request.args.get("table_id")
-    task_id = request.args.get("task_id")
-    flash(DoTask(task_id, table_id))
+    task_id = int(request.args.get("task_id"))
+    print("Table_id:%d, task_id:%d" % (table_id, task_id))
+    if task_id and table_id:
+        flash(DoTask(task_id, table_id, order_id=None, employer_id=waiter_id))
     return render_template('waiter.html', title="Waiter",
                            talbe=table_list, waiter_name=name)
-
 
 
 @app.route('/host/<name>', methods=['GET', 'POST'])
@@ -134,9 +135,11 @@ def host(name):
     table_id = request.args.get("table_id")
     task_id = request.args.get("task_id")
     if table_id:
-        table = Table.query.filter_by(id=table.id).first()
+        print("-----Start do work--------")
+        print(table_id)
+        table = Table.query.filter_by(id=table_id).first()
         if table.status == "Available":  # if table available, call waiter
-            flash(DoTask(1, table_id))
+            flash(DoTask(0, table_id))
         elif table.status == "Need Clean":  # if table needs clean, call busboy
             flash(DoTask(3, table_id))
         else:
@@ -150,10 +153,22 @@ def host(name):
 '''
 @app.route('/kitchen/<name>', methods=['GET', 'POST'])
 @login_required
+'''
+
 
 @app.route('/busboy/<name>', methods=['GET', 'POST'])
 @login_required
-'''
+def busboy(name):
+    busboy = User.query.filter_by(name=name).first()
+    busboy_id = busboy.id
+    table_list = Table.query.filter_by(staff_id=busboy_id).all()
+    table_id = request.args.get("table_id")
+    if table_id:
+        busboy.status = "free"
+        table = Table.query.filter_by(id=table_id).first()
+        table.status = "Available"
+        flash("Table "+str(table_id)+" has been cleaned")
+    return render_template('busboy.html', title="Busboy", table=table_list)
 
 
 @app.route('/TableState', methods=['GET', 'POST'])

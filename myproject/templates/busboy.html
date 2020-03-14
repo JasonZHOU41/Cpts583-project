@@ -22,22 +22,10 @@
                     <td>{{ t.order_id }}</td>
                     <td>{{ t.status }}</td>
                     <td>No Order</td>
-                    {# 如果有order 做table 和 order 的连表查询 #}
                     <td>
-                        <a href="{{ url_for('order') }}?table_id={{ t.id }}&order_id={{ t.order_id }}">
-                            <button class="table-btn btn-sm btn-info">Order</button>
+                        <a href="{{ url_for('busboy') }}?table_id={{ t.id }}">
+                          <button class="table-btn btn-sm btn-info">Table Clean</button>
                         </a>
-                        <a href="{{ url_for('host', name=host_name) }}?table_id={{ t.id }}&task_id=0">
-                            <button class="table-btn btn-sm btn-primary">Assign Waiter</button>
-                        </a>
-                        <label style="width: 25%">
-                            <select class="custom-select">
-                                <option value="1">Available</option>
-                                <option value="2">Occupy</option>
-                                <option value="3">Need Clean</option>
-                            </select>
-                        </label>
-
                     </td>
                 </tr>
             {% endfor %}

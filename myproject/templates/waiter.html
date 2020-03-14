@@ -26,7 +26,7 @@
                         <a href="{{ url_for('order') }}?table_id={{ t.id }}&order_id={{ t.order_id }}">
                             <button class="table-btn btn-sm btn-info">Order</button>
                         </a>
-                        <a href="{{ url_for('waiter', name=waiter_name) }}?table_id={{ t.id }}&task_id=2&next_state=3">
+                        <a href="{{ url_for('waiter', name=waiter_name) }}?table_id={{ t.id }}&task_id=2">
                             <button class="table-btn btn-sm btn-danger">Finish Order</button>
                         </a>
                     </td>

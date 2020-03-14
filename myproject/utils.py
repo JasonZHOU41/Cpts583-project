@@ -7,40 +7,56 @@ from myproject import db
 
 
 def DoTask(task_id, table_id=None, order_id=None, employer_id=None):
+    print("-------DoTask--------")
     print("Task id:", task_id)
-    if task_id == '0':
+    if task_id == 0:
         return AssignWaiter(table_id)
-    if task_id == '1':
+    if task_id == 1:
         print("Start order")
-    if task_id == '2':
+    if task_id == 2:
         print("Finish order")
-    if task_id == '3':
-        CleanTable(table_id)
+        return FinishOrder(table_id, employer_id)
+    if task_id == 3:
+        return CleanTable(table_id)
 
 
 def AssignWaiter(table_id):
     print("-------------------AssignWaiter--------------")
     table = Table.query.filter_by(id=table_id).first()
-    waiters = User.query.filter_by(role_id='1').all()
+    waiters = User.query.filter_by(role_id=1).all()
     free_waiters = []
     for waiter in waiters:
         if waiter.status != "busy":
             free_waiters.append(waiter)
     index = randint(0, len(free_waiters))
+    waiter = free_waiters[index]
+    table.staff_id = waiter.id
+    table.status = "Occupy"
+    waiter.status = "busy"
+    return "waiter "+waiter.name+" is serving table "+str(table.id)
 
-    return "Hello world!"
-    # for waiter in waiters:
-    #  if waiter.status == '': # 如果有waiter空闲状态, 则分配
-    #      waiter.status = ''
-    #      table.status = ''
-    #      return "waiter "+waiter.name+" is serving table "+table.id
+
+def FinishOrder(table_id, employer_id):
+    print("-------------------FinishOrder---------------")
+    table = Table.query.filter_by(id=table_id).first()
+    table.status = "Need Clean"
+    employer = User.query.filter_by(id=employer_id).first()
+    employer.status = "free"
 
 
 def CleanTable(table_id):
     print("-------------------CleanTable----------------")
     table = Table.query.filter_by(id=table_id).first()
-    # call busboy to do the job.
-    return "Hello Hello world!"
+    busboys = User.query.filter_by(role_id=4).all()
+    free_busboys = []
+    for busboy in busboys:
+        if busboy.status != "busy":
+            free_busboys.append(busboy)
+    index = randint(0, len(free_busboys))
+    busboy = free_busboys[index]
+    table.staff_id = busboy.id
+    busboy.status = "busy"
+    return "busboy "+busboy.name+" is cleaning table "+str(table.id)
 
 
 def AddUser(form):
