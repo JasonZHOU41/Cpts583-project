@@ -215,11 +215,13 @@ def menu():
 def order():
     table_id = request.args.get('table_id')
     order_id = request.args.get('order_id')
+    delete = request.args.get('delete')
     order = Order.query.filter_by(id=order_id).first()
-    dishes = json.loads(order.dishes)
     dish_list = []
-    for dish_id in dishes:
-        dish_list.append(Menu.query.filter_by(id=dish_id).first())
+    if order:
+        dishes = json.loads(order.dishes)
+        for dish_id in dishes:
+            dish_list.append(Menu.query.filter_by(id=dish_id).first())
     print("----------------order------------------")
     print(table_id)
     print(order_id)
@@ -227,7 +229,7 @@ def order():
 
     print("----------------AddOrder---------------")
     dish_id = request.args.get('dish_id')
-    if dish_id:
+    if dish_id and order:
         if delete:
             dishes.remove(dish_id)
             order.dishes = json.dumps(dishes)
