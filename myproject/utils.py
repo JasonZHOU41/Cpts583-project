@@ -47,15 +47,19 @@ def AssignWaiter(table_id):
 def CompleteOrder(table_id, order_id):
     print("-------------------Complete Order------------")
     table = Table.query.filter_by(id=table_id).first()
-    order = Order.nchengquery.filter_by(id=order_id).first()
+    order = Order.query.filter_by(id=order_id).first()
     order.status = "Ready"
     db.session.commit()
+    waiter = User.query.filter_by(id=table.staff_id).first()
+    return "Order for table "+str(table.id)+" has complete,\
+    call waiter "+str(waiter.name)
 
 
 def FinishOrder(table_id, employer_id):
     print("-------------------FinishOrder---------------")
     table = Table.query.filter_by(id=table_id).first()
     table.status = "Need Clean"
+    table.order_id = None
     order = Order.query.filter_by(id=table.order_id).first()
     order.status = "Finish"
     order.table_id = 0
@@ -69,6 +73,9 @@ def FinishOrder(table_id, employer_id):
 def CleanTable(table_id):
     print("-------------------CleanTable----------------")
     table = Table.query.filter_by(id=table_id).first()
+    server = User.query.filter_by(id=table.staff_id).first()
+    if server.role_id == 4:
+        return "busboy"+server.name+"is cleaning table"+str(table.id)
     busboys = User.query.filter_by(role_id=4).all()
     free_busboys = []
     for busboy in busboys:
@@ -135,10 +142,10 @@ def AddMenu(form):
 
 def AddOrder(table_id):
     order = Order()
-    order.status = "Prepare"
-    order.time = datetime.datetime.now
+    order.status = "Ordering"
+    #order.time = datetime.datetime.now
     order.dishes = json.dumps([])
-    table_id = table_id
+    order.table_id = table_id
     table = Table.query.filter_by(id=table_id).first()
     table.order_id = order.id
     db.session.add(order)

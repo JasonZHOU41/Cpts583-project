@@ -122,6 +122,11 @@ def waiter(name):
     table_list = Table.query.filter_by(staff_id=waiter_id).all()
     table_id = request.args.get("table_id")
     task_id = request.args.get("task_id")
+    order_id = request.args.get("order_id")
+    if order_id:
+        order = Order.query.filter_by(id=order_id).first()
+        order.status = "Prepare"
+        db.session.commit()
     if task_id and table_id:
         task_id = int(task_id)
         if task_id == 3:
@@ -132,7 +137,7 @@ def waiter(name):
             if order is None:
                 order = AddOrder(table_id)
             return redirect(url_for("order", order_id=order.id,
-                                        table_id=table_id))
+                                    table_id=table_id, waiter_id=waiter_id))
     return render_template('waiter.html', title="Waiter",
                            table=table_list, waiter_name=name)
 
@@ -162,12 +167,12 @@ def host(name):
 @app.route('/kitchen/<name>', methods=['GET', 'POST'])
 @login_required
 def kitchen(name):
-    order_list = Order.query.all()
+    order_list = Order.query.filter_by(status="Prepare").all()
     order_id = request.args.get("order_id")
     table_id = request.args.get("table_id")
     if order_id and table_id:
         print('---------------try-----finish order!----------')
-        flash(DoTask)
+        flash(DoTask(task_id=2, table_id=table_id, order_id=order_id))
     print('----------------kitchen-------------')
     return render_template('kitchen.html', title="Kitchen", orders=order_list,
                            kitchen_name=name)
@@ -184,6 +189,8 @@ def busboy(name):
         busboy.status = "free"
         table = Table.query.filter_by(id=table_id).first()
         table.status = "Available"
+        table.staff_id = None
+        db.session.commit()
         flash("Table "+str(table_id)+" has been cleaned")
     return render_template('busboy.html', title="Busboy", table=table_list,
                            busboy_name=name)
@@ -215,6 +222,7 @@ def menu():
 def order():
     table_id = request.args.get('table_id')
     order_id = request.args.get('order_id')
+    waiter_id = request.args.get('waiter_id')
     delete = request.args.get('delete')
     order = Order.query.filter_by(id=order_id).first()
     dish_list = []
@@ -238,8 +246,9 @@ def order():
             dishes.append(dish_id)
             order.dishes = json.dumps(dishes)
             db.session.commit()
+    #refresh = request.args.get()
     return render_template('order.html', title="Order", menu=menu,
-                           order_id=order_id, dishes=dish_list)
+                order_id=order_id, dishes=dish_list, waiter_id=waiter_id)
 
 
 @app.route('/logout')

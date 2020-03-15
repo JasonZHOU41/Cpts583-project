@@ -22,12 +22,24 @@
                     <td>{{ dish.name }}</td>
                     <td>${{ dish.price }}</td>
                     <td>
-                      <a href="{{ url_for('order') }}?order_id={{ order_id }}&dish_id={{ m.id }}&delete=1">
+                        <a href="{{ url_for('order') }}?waiter_id={{ waiter_id }}&order_id={{ order_id }}&dish_id={{ dish.iterid }}&delete=1">
                         <button class="table-btn btn-sm btn-info">Delete</button>
                       </a>
                     </td>
                 </tr>
             {% endfor %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('order') }}?waiter_id={{ waiter_id }}&order_id={{ order_id }}">
+                        <button class="table-btn btn-sm btn-info">Check</button>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ url_for('waiter') }}?waiter_id={{ waiter_id }}&order_id={{ order_id }}">
+                        <button class="table-btn btn-sm btn-info">Confirm</button>
+                    </a>
+                </td>
+            </tr>
             </tbody>
         </table>
     {% endif %}
@@ -51,7 +63,7 @@
                     <td>{{ m.name }}</td>
                     <td>${{ m.price }}</td>
                     <td>
-                      <a href="{{ url_for('order') }}?order_id={{ order_id }}&dish_id={{ m.id }}">
+                        <a href="{{ url_for('order') }}?waiter_id={{ waiter_id }}&order_id={{ order_id }}&dish_id={{ m.id }}">
                         <button class="table-btn btn-sm btn-info">Add</button>
                       </a>
                     </td>

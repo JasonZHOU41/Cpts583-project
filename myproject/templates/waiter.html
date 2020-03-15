@@ -9,9 +9,8 @@
             <thead>
             <tr>
                 <th scope="col">Table No.</th>
-                <th scope="col">Order</th>
+                <th scope="col">Order No.</th>
                 <th scope="col">Status</th>
-                <th scope="col">Order_status</th>
                 <th scope="col">Operation</th>
             </tr>
             </thead>
@@ -21,7 +20,6 @@
                     <td scope="row">{{ t.id }}</td>
                     <td>{{ t.order_id }}</td>
                     <td>{{ t.status }}</td>
-                    <td>No Order</td>
                     <td>
                         <a href="{{ url_for('waiter', name=waiter_name) }}?table_id={{ t.id }}&order_id={{ t.order_id }}&task_id=5">
                             <button class="table-btn btn-sm btn-info">Order</button>

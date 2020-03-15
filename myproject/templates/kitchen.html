@@ -3,15 +3,14 @@
 
 {% block content %}
 
-    {% if table %}
-        <h2 style="margin-top: 30px">Table INFO</h2>
+    {% if orders %}
+        <h2 style="margin-top: 30px">Order INFO</h2>
         <table class="table table-hover table-dark">
             <thead>
             <tr>
                 <th scope="col">Order No.</th>
-                <th scope="col">Status</th>
                 <th scope="col">Time</th>
-                <th scope="col">Table No.</th>
+                <th scope="col">Details</th>
                 <th scope="col">Operation</th>
             </tr>
             </thead>
@@ -19,9 +18,8 @@
             {% for order in orders %}
                 <tr>
                     <td scope="row">{{ order.id }}</td>
-                    <td>{{ order.status }}</td>
                     <td>{{ order.time }}</td>
-                    <td>{{ order.table_id}}</td>
+                    <td>{{ order.dishes }}</td>
                     <td>
                         <a href="{{ url_for('kitchen', name=kitchen_name) }}?order_id={{ order.id }}&table_id={{ order.table_id }}">
                             <button class="table-btn btn-sm btn-info">Complete</button>

@@ -91,7 +91,7 @@ class Order(db.Model):
 
     '''
     Order - 3 status
-    1. Prepare: Initial status of the order(When waiter click the order button)
+    1. Ordering: Initial status of the order(When waiter click the order button)
         - Click "Order" button, check the order is exits or not,
             if yes, show the order detail.
 
@@ -99,10 +99,12 @@ class Order(db.Model):
                   Fill the order_id on the "table" table
                   When add a dish from menu, opera the "detail" table
 
-    2. Ready: When kitchen finish the order(ignore the single dish)
+    2. Prepare: The customers have finished order, waiting for kitchen.
+
+    3. Ready: When kitchen finish the order(ignore the single dish)
         - Change the order status
 
-    3. Finish: When waiter click the "Finish order" button
+    4. Finish: When waiter click the "Finish order" button
         - Clean the order_id on the "table" table
     '''
 
