@@ -81,7 +81,7 @@ def manager(name):
     form = Add_Form()
     menu_add_form = Add_menu()
     edit_form = Edit_Form()
-    table_list = Table.query.all()
+    # table_list = Table.query.all()
     employer_list = User.query.all()
     menu_list = Menu.query.all()
 
@@ -94,7 +94,7 @@ def manager(name):
         return redirect(url_for('manager', name=name))
 
     return render_template('manager.html', title="Manager", form=form,
-                           table=table_list, employer=employer_list,
+                           employer=employer_list,
                            menu=menu_list, menu_add_form=menu_add_form,
                            edit_user=edit_form)
 
