@@ -25,3 +25,8 @@ github commit id: isMengxiao
 ## Admin password:
 * username: admin
 * password: 112233
+
+## Monitoring Dashboard
+* http://127.0.0.1:5000/dashboard/overview
+* Username: admin 
+* Password: admin
