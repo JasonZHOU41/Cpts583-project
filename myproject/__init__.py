@@ -6,9 +6,11 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+import flask_monitoringdashboard as dashboard
 
 
 app = Flask(__name__)
+dashboard.bind(app)
 app.config.from_object('config')
 
 bootstrap = Bootstrap(app)
