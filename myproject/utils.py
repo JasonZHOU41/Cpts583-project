@@ -103,7 +103,7 @@ def AddUser(form):
         form.name.data = ''
         form.role.data = ''
         # print(user_username, user_pass, user_email, user_name, user_role)
-        Users = User.query.filter_by(username=user_username).first()
+        Users = User.query.filter_by(username=user_username.lower()).first()
         if Users:
             flash('User Already exits')
         else:
@@ -127,7 +127,7 @@ def AddMenu(form):
 
         form.name.data = ''
         form.price.data = ''
-        dish = Menu.query.filter_by(name=dish_name).first()
+        dish = Menu.query.filter_by(name=dish_name.lower()).first()
         if dish:
             flash('Already exits')
         else:
