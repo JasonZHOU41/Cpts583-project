@@ -6,7 +6,7 @@
 ## Team info:
 
 Contact person
-* Xiaonan Zhou(11644578)
+* Xiaonan Zhou
 
 Team member
 * Kuan-Yu Tseng
